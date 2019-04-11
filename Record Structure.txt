@@ -1,0 +1,42 @@
+Buku = record
+	ID_Buku 		: string;
+	Judul_Buku		: string;
+	Author 			: string;
+	Jumlah_Buku		: integer;
+	Tahun_Penerbit	: integer;
+	Kategori 		: string;
+end
+
+User : record
+	Nama		: string;
+	Alamat		: string;
+	Username	: string;
+	Password	: string;
+	Role		: string;
+end
+
+Date : record
+	DD 		: integer;
+	MM 		: integer;
+	YYYY 	: integer;
+end
+
+HistoryPeminjaman : record
+	Username					: string;
+	ID_Buku						: string;
+	Tanggal_Peminjaman 			: Date;
+	Tanggal_Batas_Pengembalian 	: Date;
+	Status_Pengembalian 		: boolean;
+end
+
+HistoryPengembalian : record
+	Username				: string;
+	ID_Buku 				: string;
+	Tanggal_Pengembalian 	: Date;
+end
+
+LaporanHilang : record
+	Username		: string;
+	ID_Buku_Hilang 	: string;
+	Tanggal_Laporan	: Date;
+end
