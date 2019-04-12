@@ -2,22 +2,11 @@ unit cari;
 
 interface
 
-Uses uFileLoader;
-	
-type{
-	Buku = record
-				ID_Buku : string;
-				Judul_Buku		: string;
-				Author 			: string;
-				Jumlah_Buku		: integer;
-				Tahun_Penerbit	: integer;
-				Kategori 		: string;
-			end;
-	BArr = array[1..1000] of Buku;}
-	k = string;
+uses
+	uFileLoader;
 
 function validasi(k: string): boolean;
-procedure CariArr(var arrBuku : BArr);
+procedure search(var arrBuku: BArr);
 
 implementation
 function validasi(k: string): boolean;
@@ -26,7 +15,7 @@ function validasi(k: string): boolean;
 		validasi := (k = 'sastra') or (k = 'sains') or (k = 'manga') or (k = 'sejarah') or (k = 'programming');
 	end;
 
-procedure CariArr(var arrBuku: BArr);
+procedure search(var arrBuku: BArr);
 //menghasilkan daftar buku yang memiliki kategori sesuai input
 	var
 	count, i: integer;
@@ -35,15 +24,15 @@ procedure CariArr(var arrBuku: BArr);
 	begin
 		i:=1;
 		count:=0;
-		writeln('Masukkan kategori: ');
+		write('Masukkan kategori: ');
 		readln(k);
 		while(validasi(k) = false) do
 			begin
 				writeln('Kategori ', k, ' tidak valid.');
-				writeln('Masukkan kategori: ');
+				write('Masukkan kategori: ');
 				readln(k);
 			end;
-		while(not eof) do
+		while(i<=GetSizeBuku()) do
 			begin
 				if(k = arrBuku[i].Kategori) then
 					begin
@@ -56,4 +45,3 @@ procedure CariArr(var arrBuku: BArr);
 			writeln('Tidak ada buku dalam kategori ini.');
 	end;
 end.
- 
