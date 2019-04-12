@@ -2,27 +2,18 @@ unit kembalikan_buku;
 
 interface
 	uses
-		uFileLoader;
+		uFileLoader,
+		uDate;
 
 function isThnKabisat(j:integer): boolean;
-procedure denda();
+procedure denda(var arrPeminjaman: PinjamArr; var arrBuku: BArr);
 function convertBulantoHari(m, y: integer): integer;
-function convertTahuntoHari(y1, y2: integer): Integer;
+function convertTahuntoHari(y: integer): Integer;
 
 implementation
 function isThnKabisat(j:integer): boolean;
-	var
-		flag: boolean;
 	begin
-		if((j%4) = 0) and ((j%100) <> 0) or ((j%400) = 0)) then
-			begin
-				flag:=true;
-			end
-		else
-			begin
-				flag:=false;
-			end;
-		isThnKabisat := flag;
+		isThnKabisat := (j mod 4 = 0) and (j mod 100 <> 0) or (j mod 400 = 0);
 	end;
 
 function convertBulantoHari(m, y: integer): integer;
@@ -39,19 +30,19 @@ function convertBulantoHari(m, y: integer): integer;
 				jml_hari := 0;
 				for i:=1 to (m-1) do
 					begin
-						if((i = 2) and (isThnKabisat(y)) then
+						if((i = 2) and (isThnKabisat(y))) then
 							begin
 								jml_hari := jml_hari + 29;
 							end
-						else if((i=2) and (not isThnKabisat(y)) then
+						else if((i=2) and (not isThnKabisat(y))) then
 							begin
 								jml_hari := jml_hari + 28;
 							end
-						else if((i<=7) and (i%2 = 1)) then
+						else if((i<=7) and (i mod 2 = 1)) then
 							begin
 								jml_hari := jml_hari + 31;
 							end
-						else if((i>7) and (i%2 = 0)) then
+						else if((i>7) and (i mod 2 = 0)) then
 							begin
 								jml_hari := jml_hari + 31;
 							end
@@ -64,37 +55,31 @@ function convertBulantoHari(m, y: integer): integer;
 			end;
 	end;
 
-function convertTahuntoHari(y1, y2: integer): Integer;
+function convertTahuntoHari(y: integer): Integer;
 	var
 		jml_hari, i: Integer;
 
 	begin
-		if( y2-y1 = 0 ) then
+		jml_hari:=0;
+		for i:=0 to y do
 			begin
-				convertTahuntoHari := 0;
-			end
-		else
-			begin
-				for i:=y1 to y2 do
+				if(isThnKabisat(y)) then
 					begin
-						if(isThnKabisat(i)) then
-							begin
-								jml_hari := jml_hari + 366;
-							end
-						else
-							begin
-								jml_hari := jml_hari + 365;
-							end;
+						jml_hari := jml_hari + 366;
+						end
+				else
+					begin
+						jml_hari := jml_hari + 365;
 					end;
-				convertTahuntoHari := jml_hari;
 			end;
+		convertTahuntoHari := jml_hari;
 	end;
 
 procedure denda(var arrPeminjaman: PinjamArr; var arrBuku: BArr);
 	var
-		i, denda : integer;
+		i, j, fine, days : integer;
 		stop : boolean;
-		date : string;
+		datestring, id : string;
 		dateint : Date;
 
 	begin
@@ -102,9 +87,8 @@ procedure denda(var arrPeminjaman: PinjamArr; var arrBuku: BArr);
 		readln(id);
 		writeln('Data peminjaman:');
 		i:=0;
-		j:=0;
 		stop:= false;
-		while(i<=lenHistoryPeminjaman) and (not stop)) do
+		while((i<=lenHistoryPeminjaman) and (not stop)) do
 			begin
 				i := i+1;
 				if(id = arrPeminjaman[i].ID_Buku) then
@@ -112,7 +96,9 @@ procedure denda(var arrPeminjaman: PinjamArr; var arrBuku: BArr);
 						stop := true;
 					end;
 			end;
-		while((j<=ukuran_arrBuku) and (not stop)) do
+		stop:=false;
+		j:=0;
+		while((j<=lenBuku) and (not stop)) do
 			begin
 				j := j+1;
 				if(id = arrBuku[j].ID_Buku) then
@@ -123,15 +109,15 @@ procedure denda(var arrPeminjaman: PinjamArr; var arrBuku: BArr);
 
 		write('Username: '); writeln(arrPeminjaman[i].Username);
 		write('Judul buku: '); writeln(arrBuku[j].Judul_Buku);
-		write('Tanggal peminjaman: '); writeln(arrPeminjaman[i].Tanggal_Peminjaman);
-		write('Tanggal batas: '); writeln(arrPeminjaman[i].Tanggal_Batas_Pengembalian);
+		write('Tanggal peminjaman: '); writeln(arrPeminjaman[i].Tanggal_Peminjaman.DD, '/', arrPeminjaman[i].Tanggal_Peminjaman.MM, '/', arrPeminjaman[i].Tanggal_Peminjaman.YYYY);
+		write('Tanggal batas: '); writeln(arrPeminjaman[i].Tanggal_Batas_Pengembalian.DD, '/', arrPeminjaman[i].Tanggal_Batas_Pengembalian.MM, '/', arrPeminjaman[i].Tanggal_Batas_Pengembalian.YYYY);
 		writeln();
-		write('Masukkan tanggal hari ini: '); readln(date);
-		dateint := ParseDate(date);
-		denda:= (convertTahuntoHari(arrPeminjaman[i].Tanggal_Batas_Pengembalian.YYYY, dateint.YYYY) +
-				dateint.DD + convertBulantoHari(dateint.MM, dateint.YYYY) -
-				(arrPeminjaman[i].Tanggal_Batas_Pengembalian.YYYY + convertBulantoHari(arrPeminjaman[i].Tanggal_Batas_Pengembalian.MM, arrPeminjaman[i].Tanggal_Batas_Pengembalian.YYYY)))*2000;
-		writeln('Anda terlambat mengembalikan buku.');
-		writeln('Anda terkena denda ', denda, '.');
+		write('Masukkan tanggal hari ini: '); readln(datestring);
+		dateint := ParseDate(datestring);
+		days:= (convertTahuntoHari(dateint.YYYY) + dateint.DD + convertBulantoHari(dateint.MM, dateint.YYYY) - convertTahuntoHari(arrPeminjaman[i].Tanggal_Batas_Pengembalian.YYYY) -
+			arrPeminjaman[i].Tanggal_Batas_Pengembalian.DD - convertBulantoHari(arrPeminjaman[i].Tanggal_Batas_Pengembalian.MM, arrPeminjaman[i].Tanggal_Batas_Pengembalian.YYYY));
+		fine:=days*2000;
+		writeln('Anda terlambat mengembalikan buku ', days, ' hari.');
+		writeln('Anda terkena denda ', fine, ' rupiah.');
 	end;
 end.

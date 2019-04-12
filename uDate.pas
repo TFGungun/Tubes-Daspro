@@ -1,8 +1,8 @@
 unit uDate;
 
 interface
-	
-	Uses sysutils;
+	uses
+		parsertuanyon;
 
 	type
 		Date = record
@@ -28,7 +28,7 @@ implementation
 	begin
 		i := 1;
 		slashcount := 0;
-		temp_string := ' ';
+		temp_string := '';
 		while (i <= Length(datestring)) do
 		begin
 			while (datestring[i] <> '/') and (i < Length(datestring)) do
@@ -70,7 +70,14 @@ implementation
 
 	function GetIntervalInDay(var date1, date2 : Date ) : integer;
 	begin
-		GetIntervalInDay := date1.DD - date2.DD;
+		if(date1.DD>date2.DD) then
+			begin
+			GetIntervalInDay := date1.DD - date2.DD;
+			end
+		else
+			begin
+			GetIntervalInDay := date1.DD - date2.DD;
+			end;
 	end;
 
 	procedure WriteDate(var dateofdate : Date);
