@@ -288,22 +288,35 @@ implementation
 				begin
 					while (readstring[j] <> ',') and (j <= length(readstring)) do
 					begin
-						case comcount of
-						0 : begin
-							arrUser[i].Nama := arrUser[i].Nama + readstring[j];
+						if (readstring[j] = '"') then
+						begin
+							inc(j);
+							while (readstring[j] <> '"') do
+							begin
+								arrUser[i].Alamat := arrUser[i].Alamat + readstring[j];
+								writeln(arrUser[i].Alamat);
+								inc(j);
 							end;
-						1 : begin
-							arrUser[i].Alamat := arrUser[i].Alamat + readstring[j];
-							end; 
-						2 : begin
-							arrUser[i].Username := arrUser[i].Username + readstring[j];
-							end; 
-						3 : begin
-							arrUser[i].Password := arrUser[i].Password + readstring[j];
-							end; 
-						4 : begin
-							arrUser[i].Role := arrUser[i].Role + readstring[j];
-							end; 
+						end else
+						begin
+							case comcount of
+							0 : begin
+								arrUser[i].Nama := arrUser[i].Nama + readstring[j];
+								end;
+							1 : begin
+								arrUser[i].Alamat := arrUser[i].Alamat + readstring[j];
+								writeln(arrUser[i].Alamat);
+								end; 
+							2 : begin
+								arrUser[i].Username := arrUser[i].Username + readstring[j];
+								end; 
+							3 : begin
+								arrUser[i].Password := arrUser[i].Password + readstring[j];
+								end; 
+							4 : begin
+								arrUser[i].Role := arrUser[i].Role + readstring[j];
+								end; 
+							end;
 						end;
 					inc(j);
 					end;
