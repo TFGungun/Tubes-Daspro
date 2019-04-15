@@ -11,12 +11,15 @@ var
 	arrLaporanHilang : array[1..1000] of LaporanHilang;
 	k : integer;
 	//a,d : Date;
-	b,c : string;
+	b,c, bukufilename : string;
 
 begin
+	write('Masukkan nama file buku: ');
+	readln(bukufilename);
 	writeln('Data Buku');
-	LoadBuku(arrBuku);
+	LoadBuku(arrBuku, bukufilename);
 	PrintBuku(arrBuku);
+	{
 	writeln('');
 	writeln('Data User');
 	LoadUser(arrUser);
@@ -34,6 +37,7 @@ begin
 	LoadLaporanHilang(arrLaporanHilang);
 	PrintLaporanHilang(arrLaporanHilang);
 	writeln('');
+}
 	{
 	for k := 1 to (uFileLoader.GetSizeBuku()) do
 		begin

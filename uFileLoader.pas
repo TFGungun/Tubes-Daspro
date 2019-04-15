@@ -49,27 +49,27 @@ interface
 		HilangArr = array[1..1000] of LaporanHilang;
 	
 
-	procedure LoadBuku (var arrBuku: BArr);
+	procedure LoadBuku (var arrBuku: BArr ; filename : string);
 
 	procedure PrintBuku (var arrBuku : BArr);
 
 	function GetSizeBuku ()	: longint;
 
-	procedure LoadUser (var arrUser : UArr);
+	procedure LoadUser (var arrUser : UArr; filename : string);
 
 	procedure PrintUser (var arrUser : UArr);
 
 	function GetSizeUser () : longint;
 
-	procedure LoadHistoryPeminjaman(var arrHistoryPeminjaman : PinjamArr);
+	procedure LoadHistoryPeminjaman(var arrHistoryPeminjaman : PinjamArr ; filename : string);
 
 	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
 
-	procedure LoadHistoryPengembalian(var arrHistoryPengembalian : KembaliArr);
+	procedure LoadHistoryPengembalian(var arrHistoryPengembalian : KembaliArr ;  filename : string);
 
 	procedure PrintHistoryPengembalian (var arrHistoryPengembalian : KembaliArr);
 
-	procedure LoadLaporanHilang(var arrLaporanHilang : HilangArr);
+	procedure LoadLaporanHilang(var arrLaporanHilang : HilangArr; filename : string);
 
 	procedure PrintLaporanHilang(var arrLaporanHilang : HilangArr);
 
@@ -88,7 +88,7 @@ implementation
 	
 	
 
-	procedure LoadBuku (var arrBuku: BArr);
+	procedure LoadBuku (var arrBuku: BArr; filename : string);
 
 	var
 
@@ -104,12 +104,12 @@ implementation
 	begin
 
 		// Get buku.csv file size
-		system.Assign(F, 'buku.csv');
+		system.Assign(F, filename);
 		system.Reset(F);
 		lenBuku := FileSize(F);
 		Close(F);
 
-		system.Assign(UserFile, 'buku.csv');
+		system.Assign(UserFile, filename);
 		system.Reset(UserFile);
 
 		i := 1;
@@ -232,7 +232,7 @@ implementation
 		end;
 	end;
 
-	procedure LoadUser (var arrUser: UArr);
+	procedure LoadUser (var arrUser: UArr; filename : string);
 
 	var
 
@@ -248,12 +248,12 @@ implementation
 	begin
 
 		// Get buku.csv file size
-		system.Assign(F, 'user.csv');
+		system.Assign(F, filename);
 		system.Reset(F);
 		lenUser := FileSize(F);
 		Close(F);
 
-		system.Assign(UserFile, 'user.csv');
+		system.Assign(UserFile, filename);
 		system.Reset(UserFile);
 
 		i := 1;
@@ -372,7 +372,7 @@ implementation
 		GetSizeUser := lenUser;
 	end;
 
-	procedure LoadHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
+	procedure LoadHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr ; filename : string);
 
 	var
 
@@ -388,12 +388,12 @@ implementation
 	begin
 
 		// Get buku.csv file size
-		system.Assign(F, 'peminjaman.csv');
+		system.Assign(F, filename);
 		system.Reset(F);
 		lenUser := FileSize(F);
 		Close(F);
 
-		system.Assign(UserFile, 'peminjaman.csv');
+		system.Assign(UserFile, filename);
 		system.Reset(UserFile);
 
 		i := 1;
@@ -524,7 +524,7 @@ implementation
 		end;
 	end;
 
-	procedure LoadHistoryPengembalian (var arrHistoryPengembalian : KembaliArr);
+	procedure LoadHistoryPengembalian (var arrHistoryPengembalian : KembaliArr; filename : string);
 
 	var
 
@@ -540,12 +540,12 @@ implementation
 	begin
 
 		// Get buku.csv file size
-		system.Assign(F, 'pengembalian.csv');
+		system.Assign(F, filename);
 		system.Reset(F);
 		lenUser := FileSize(F);
 		Close(F);
 
-		system.Assign(UserFile, 'pengembalian.csv');
+		system.Assign(UserFile, filename);
 		system.Reset(UserFile);
 
 		i := 1;
@@ -643,7 +643,7 @@ implementation
 		end;
 	end;
 
-	procedure LoadLaporanHilang(var arrLaporanHilang : HilangArr);
+	procedure LoadLaporanHilang(var arrLaporanHilang : HilangArr; filename : string);
 
 	var
 
@@ -659,12 +659,12 @@ implementation
 	begin
 
 		// Get buku.csv file size
-		system.Assign(F, 'kehilangan.csv');
+		system.Assign(F, filename);
 		system.Reset(F);
 		lenUser := FileSize(F);
 		Close(F);
 
-		system.Assign(UserFile, 'kehilangan.csv');
+		system.Assign(UserFile, filename);
 		system.Reset(UserFile);
 
 		i := 1;
