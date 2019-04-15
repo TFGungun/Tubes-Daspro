@@ -754,5 +754,4 @@ implementation
 
 		lenLaporanHilang := (linecount-1);
 	end;
-	writeln('apalah tserah lu');
 end.

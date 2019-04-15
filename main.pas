@@ -12,8 +12,37 @@ var
 	arrHistoryPengembalian : array[1..1000] of HistoryPengembalian;
 	arrLaporanHilang : array[1..1000] of LaporanHilang;
 	k : integer;
-	x : string;
+	x, filename : string;
 
+procedure Load_File();
+begin
+	write('Masukkan nama File Buku: ');
+	readln(filename);
+	LoadBuku(arrBuku, filename);
+	writeln('');
+
+
+	write('Masukkan nama File User: ');
+	readln(filename);
+	LoadUser(arrUser, filename);
+	writeln('');
+
+
+	write('Masukkan nama File Peminjaman: ');
+	readln(filename);
+	LoadHistoryPeminjaman(arrHistoryPeminjaman, filename);
+	writeln('');
+
+	write('Masukkan nama File Pengembalian: ');
+	readln(filename);
+	LoadHistoryPengembalian(arrHistoryPengembalian, filename);
+	writeln('');
+
+	write('Masukkan nama File Buku hilang: ');
+	readln(filename);
+	LoadLaporanHilang(arrLaporanHilang, filename);
+	writeln('');
+end;
 procedure Menu_Admin();
 begin
 	writeln('$ register : daftar anggota perpustakaan baru');
@@ -140,23 +169,23 @@ end;
 
 begin
 	writeln('Data Buku');
-	LoadBuku(arrBuku);
+	LoadBuku(arrBuku, filename);
 	PrintBuku(arrBuku);
 	writeln('');
 	writeln('Data User');
-	LoadUser(arrUser);
+	LoadUser(arrUser, filename);
 	PrintUser(arrUser);
 	writeln('');
 	writeln('Data History Peminjaman');
-	LoadHistoryPeminjaman(arrHistoryPeminjaman);
+	LoadHistoryPeminjaman(arrHistoryPeminjaman, filename);
 	PrintHistoryPeminjaman(arrHistoryPeminjaman);
 	writeln('');
 	writeln('Data History Pengembalian');
-	LoadHistoryPengembalian(arrHistoryPengembalian);
+	LoadHistoryPengembalian(arrHistoryPengembalian, filename);
 	PrintHistoryPengembalian(arrHistoryPengembalian);
 	writeln('');
 	writeln('Data Laporan Kehilangan');
-	LoadLaporanHilang(arrLaporanHilang);
+	LoadLaporanHilang(arrLaporanHilang, filename);
 	PrintLaporanHilang(arrLaporanHilang);
 	writeln('');
 	{load dulu}
