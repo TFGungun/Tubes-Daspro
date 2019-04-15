@@ -2,7 +2,7 @@ Program main;
 
 uses
 	uFileLoader, uDate,
-	cari, caritahunterbit, login, pencarian_kategori, riwayat_peminjaman, statistik,
+	cari, caritahunterbit, login, riwayat_peminjaman, statistik,
 	tambah_buku, tambah_jumlah_buku;
 
 var
@@ -75,7 +75,7 @@ begin
 								amount(arrBuku);
 								end;
 		'riwayat': begin
-						cek_riwayat(arrPeminjaman, arrBuku);
+						cek_riwayat(arrHistoryPeminjaman, arrBuku);
 					end;
 		'statisik': begin
 						list_statistik(arrBuku, arrUser);
@@ -92,6 +92,7 @@ begin
 		'exit': begin
 			
 				end;
+	end;
 end;
 
 procedure Menu_Pengunjung_L();
@@ -127,6 +128,7 @@ begin
 		'exit': begin
 			
 				end;
+	end;
 end;
 
 procedure Menu_Pengunjung();
@@ -141,14 +143,14 @@ begin
 	case x of
 		'login': begin
 					log_in(arrUser);
-					if(arrUser[i].Role = 'Admin') then
-						begin
-							Menu_Admin();
-						end
-					else
-						begin
-							Menu_Pengunjung_L();
-						end;
+					//if(arrUser[i].Role = 'Admin') then
+					//	begin
+					//		Menu_Admin();
+					//	end
+					//else
+					//	begin
+					//		Menu_Pengunjung_L();
+					//	end;
 				 end;
 		'cari': begin
 					search(arrBuku);			
@@ -165,27 +167,24 @@ begin
 		'exit': begin
 			
 				end;
+	end;
 end;
 
 begin
+	Load_File();
 	writeln('Data Buku');
-	LoadBuku(arrBuku, filename);
 	PrintBuku(arrBuku);
 	writeln('');
 	writeln('Data User');
-	LoadUser(arrUser, filename);
 	PrintUser(arrUser);
 	writeln('');
 	writeln('Data History Peminjaman');
-	LoadHistoryPeminjaman(arrHistoryPeminjaman, filename);
 	PrintHistoryPeminjaman(arrHistoryPeminjaman);
 	writeln('');
 	writeln('Data History Pengembalian');
-	LoadHistoryPengembalian(arrHistoryPengembalian, filename);
 	PrintHistoryPengembalian(arrHistoryPengembalian);
 	writeln('');
 	writeln('Data Laporan Kehilangan');
-	LoadLaporanHilang(arrLaporanHilang, filename);
 	PrintLaporanHilang(arrLaporanHilang);
 	writeln('');
 	{load dulu}
