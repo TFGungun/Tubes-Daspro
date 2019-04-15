@@ -20,6 +20,7 @@ interface
 			Username 	: string;
 			Password	: string;
 			Role		: string;
+			Status 		: boolean;
 		end;
 
 		HistoryPeminjaman = record
@@ -42,6 +43,7 @@ interface
 			Tanggal_Laporan		 			: Date;
 		end;
 
+
 		BArr = array[1..1000] of Buku;
 		UArr = array[1..1000] of User;
 		PinjamArr = array[1..1000] of HistoryPeminjaman;
@@ -63,6 +65,7 @@ interface
 
 	procedure LoadHistoryPeminjaman(var arrHistoryPeminjaman : PinjamArr ; filename : string);
 
+
 	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
 
 	procedure LoadHistoryPengembalian(var arrHistoryPengembalian : KembaliArr ;  filename : string);
@@ -71,9 +74,9 @@ interface
 
 	procedure LoadLaporanHilang(var arrLaporanHilang : HilangArr; filename : string);
 
-	procedure PrintLaporanHilang(var arrLaporanHilang : HilangArr);
+	//procedure PrintLaporanHilang(var arrLaporanHilang : HilangArr);
 
-	//function GetSizeHistoryPeminjaman () : longint;
+
 
 
 
@@ -305,7 +308,6 @@ implementation
 								end;
 							1 : begin
 								arrUser[i].Alamat := arrUser[i].Alamat + readstring[j];
-								writeln(arrUser[i].Alamat);
 								end; 
 							2 : begin
 								arrUser[i].Username := arrUser[i].Username + readstring[j];
@@ -315,7 +317,7 @@ implementation
 								end; 
 							4 : begin
 								arrUser[i].Role := arrUser[i].Role + readstring[j];
-								end; 
+								end;
 							end;
 						end;
 					inc(j);
@@ -329,6 +331,7 @@ implementation
 				end;
 				comcount := 0;
 				j := 1;
+				arrUser[i].Status := false;
 				inc(i);
 				inc(linecount);
 			end;
@@ -426,25 +429,33 @@ implementation
 				readln(UserFile, readstring);
 				while (j <= length(readstring)) do
 				begin
+					writeln(comcount);
 					while (readstring[j] <> ',') and (j <= length(readstring)) do
 					begin
 						case comcount of
 						0 : begin
 							arrHistoryPeminjaman[i].Username := arrHistoryPeminjaman[i].Username + readstring[j];
+							writeln(arrHistoryPeminjaman[i].Username);
 							end;
 						1 : begin
 							arrHistoryPeminjaman[i].ID_Buku := arrHistoryPeminjaman[i].ID_Buku + readstring[j];
+							writeln(arrHistoryPeminjaman[i].ID_Buku);
 							end; 
 						2 : begin
 							temp_string := temp_string + readstring[j];
+							writeln(temp_string);
 							//arrHistoryPeminjaman[i].Username := arrHistoryPeminjaman[i].Username + readstring[j];
 							end; 
 						3 : begin
 							temp_string := temp_string + readstring[j];
+							writeln(temp_string);
+							
 							//arrHistoryPeminjaman[i].Password := arrHistoryPeminjaman[i].Password + readstring[j];
 							end; 
 						4 : begin
 							temp_string := temp_string + readstring[j];
+							writeln(temp_string);
+
 							//arrHistoryPeminjaman[i].Role := arrHistoryPeminjaman[i].Role + readstring[j];
 							end; 
 						end;
@@ -463,7 +474,6 @@ implementation
 								temp_string := '';
 								end;
 							4 : begin
-								writeln('MAJU JALAN');
 								arrHistoryPeminjaman[i].Status_Pengembalian := StrToBool(temp_string);
 								temp_string := '';
 								end;
@@ -743,22 +753,5 @@ implementation
 		Close(UserFile);
 
 		lenLaporanHilang := (linecount-1);
-	end;
-
-	procedure PrintLaporanHilang(var arrLaporanHilang : HilangArr);
-	var
-		k : integer;
-	begin
-		for k := 1 to (lenLaporanHilang) do
-		begin
-			write(k);
-			write(' | ');
-			write(arrLaporanHilang[k].Username);
-			write(' | ');
-			write(arrLaporanHilang[k].ID_Buku);
-			write(' | ');
-			WriteDate(arrLaporanHilang[k].Tanggal_Laporan);
-			writeln();
-		end;
 	end;
 end.
