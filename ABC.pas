@@ -1,7 +1,7 @@
 Program ABC;
 
 //uses //uFileLoader, cari, uDate, sysutilsmanual;
-uses uFileLoader, uHilang;
+uses uFileLoader, uHilang, uFileSaver, tambah_buku, registrasi, PeminjamanBuku, riwayat_peminjaman;
 
 var
 	arrBuku : array[1..1000] of Buku;
@@ -14,15 +14,116 @@ var
 	b,c, bukufilename : string;
 
 begin
+	{
 	write('Masukkan nama file buku: ');
 	readln(bukufilename);
 	writeln('Data Buku');
 	LoadBuku(arrBuku, bukufilename);
 	PrintBuku(arrBuku);
+	add(arrBuku);
+	writeln(lenBuku);
+	PrintBuku(arrBuku);
+	write('Masukkan nama file Buku: ');
+	readln(bukufilename);
+	SaveBuku(arrBuku, bukufilename);
+}
+	{
+	write('Masukkan nama file user: ');
+	readln(bukufilename);
+	writeln('Data User');
+	LoadUser(arrUser, bukufilename);
+	Printuser(arrUser);
+	regis(arrUser);
+	writeln(lenUser);
+	PrintUser(arrUser);
+
+    writeln(arrUser[lenUser-1].Nama);
+    writeln(arrUser[lenUser-1].Alamat);
+    writeln(arrUser[lenUser-1].Username);
+    writeln(arrUser[lenUser-1].Password);
+    writeln(arrUser[lenUser-1].Role);
+
+	write('Masukkan nama file user: ');
+	readln(bukufilename);
+	SaveUser(arrUser, bukufilename);
+}
+{
+	write('Masukkan nama file buku: ');
+	readln(bukufilename);
+	writeln('Data Buku');
+	LoadBuku(arrBuku, bukufilename);
+	PrintBuku(arrBuku);
+
+	write('Masukkan nama file Peminjaman: ');
+	readln(bukufilename);
+	writeln('Data Peminjaman');
+	LoadHistoryPeminjaman(arrHistoryPeminjaman, bukufilename);
+	PrintHistoryPeminjaman(arrHistoryPeminjaman);
+	cek_riwayat(arrHistoryPeminjaman, arrBuku);
+	writeln(lenHistoryPeminjaman);
+	PrintHistoryPeminjaman(arrHistoryPeminjaman);
+
+	write('Masukkan nama file Peminjaman: ');
+	readln(bukufilename);
+	SaveHistoryPeminjaman(arrHistoryPeminjaman, bukufilename);
+}
+{
+	write('Masukkan nama file buku: ');
+	readln(bukufilename);
+	writeln('Data Buku');
+	LoadBuku(arrBuku, bukufilename);
+	PrintBuku(arrBuku);
+
+	write('Masukkan nama file Peminjaman: ');
+	readln(bukufilename);
+	writeln('Data Peminjaman');
+	LoadHistoryPeminjaman(arrHistoryPeminjaman, bukufilename);
+	PrintHistoryPeminjaman(arrHistoryPeminjaman);
+
+	write('Masukkan nama file Pengembalian: ');
+	readln(bukufilename);
+	writeln('Data Pengembalian');
+	LoadHistoryPengembalian(arrHistoryPengembalian, bukufilename);
+	PrintHistoryPengembalian(arrHistoryPengembalian);
+	//cek_riwayat(arrHistoryPengembalian, arrBuku);
+	//writeln(lenHistoryPengembalian);
+	//PrintHistoryPengembalian(arrHistoryPengembalian);
+
+	write('Masukkan nama file Pengembalian: ');
+	readln(bukufilename);
+	SaveHistoryPengembalian(arrHistoryPengembalian, bukufilename);}
+
+
+	write('Masukkan nama file buku: ');
+	readln(bukufilename);
+	writeln('Data Buku');
+	LoadBuku(arrBuku, bukufilename);
+	PrintBuku(arrBuku);
+
+	write('Masukkan nama file Peminjaman: ');
+	readln(bukufilename);
+	writeln('Data Peminjaman');
+	LoadHistoryPeminjaman(arrHistoryPeminjaman, bukufilename);
+	PrintHistoryPeminjaman(arrHistoryPeminjaman);
+
+	write('Masukkan nama file Laporan Hilang: ');
+	readln(bukufilename);
+	writeln('Data Laporan Hilang');
+	LoadLaporanHilang(arrLaporanHilang, bukufilename);
+	PrintLaporanHilang(arrLaporanHilang);
+	//cek_riwayat(arrHistoryPengembalian, arrBuku);
+	//writeln(lenHistoryPengembalian);
+	//PrintHistoryPengembalian(arrHistoryPengembalian);
+
+	write('Masukkan nama file Laporan Hilang: ');
+	readln(bukufilename);
+	SaveLaporanHilang(arrLaporanHilang, bukufilename);
+
 {
 	writeln('');
 	writeln('Data User');
 	LoadUser(arrUser);
+
 	PrintUser(arrUser);
 	writeln('');
 	writeln('Data History Peminjaman');
@@ -33,12 +134,12 @@ begin
 	LoadHistoryPengembalian(arrHistoryPengembalian);
 	PrintHistoryPengembalian(arrHistoryPengembalian);
 	writeln('');
-}
+
 	writeln('Data Laporan Kehilangan');
 	LoadLaporanHilang(arrLaporanHilang);
 	PrintLaporanHilang(arrLaporanHilang);
 	PrintLaporanWithJudul(arrLaporanHilang)
-	writeln('');
+	writeln('');}
 	{
 	for k := 1 to (uFileLoader.GetSizeBuku()) do
 		begin

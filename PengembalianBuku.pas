@@ -46,18 +46,18 @@ var
 begin
 	write('Masukkan id buku yang ingin dikembalikan ');
 	readln(idkembali);
-	arrHistoryPengembalian.ID_Buku := idkembali;
+	arrHistoryPengembalian.ID_Buku := idkembali; // array harus ada index cth arrHistoryPengembalian[index]
 	writeln('Data Peminjam: ');
-	writeln('Username: ', arrUser.Username);
-	writeln('Judul_Buku: ', arrBuku.Judul_Buku);
-	writeln('Tanggal Peminjaman: ', writeDate(var arrHistoryPeminjaman.Tanggal_Peminjaman: Date);
-	writeln('Tanggal Batas Pengembalian: ', arrHistoryPeminjaman.Tanggal_Batas_Pengembalian);
+	writeln('Username: ', arrUser.Username); // Username yang direfer harusnya dari arrHistoryPeminjaman
+	writeln('Judul_Buku: ', arrBuku.Judul_Buku); // Harus diketahui index arrBuku mana yang diambil judul_Bukunya
+	writeln('Tanggal Peminjaman: ', writeDate(var arrHistoryPeminjaman.Tanggal_Peminjaman: Date); // writedate enggak ngembaliin nilai, kita gabisa masukkin procedure ke dalem writeln
+	writeln('Tanggal Batas Pengembalian: ', arrHistoryPeminjaman.Tanggal_Batas_Pengembalian); // Tanggal gabisa diwriteln langsung, harus pake writedate karena tanggal itu type Date (terdiri dari 3 atribut)
 	
 	writeln('Masukkan tanggal hari ini: ');
-	WriteDate(var HistoryPeminjaman.Tanggal_Peminjaman : Date);
+	WriteDate(var HistoryPeminjaman.Tanggal_Peminjaman : Date); // di sini harusnya bukan write date tanggal peminjaman, karena program meminta tanggal hari ini untuk dicocokkan
 
-	if (HistoryPeminjaman.Tanggal_Batas_Pengembalian.YYYY = HistoryPengembalian.Tanggal_Pengembalian.YYYY)
-	begino
+	if (HistoryPeminjaman.Tanggal_Batas_Pengembalian.YYYY = HistoryPengembalian.Tanggal_Pengembalian.YYYY) then
+	begin
 		if (HistoryPeminjaman.Tanggal_Batas_Pengembalian.MM = HistoryPengembalian.Tanggal_Pengembalian.MM) then
 		begin
 			if (HistoryPeminjaman.Tanggal_Batas_Pengembalian.DD >= HistoryPengembalian.Tanggal_Pengembalian.DD) then
