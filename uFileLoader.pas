@@ -491,10 +491,6 @@ implementation
 				inc(linecount);
 			end;
 
-			//while (j <= length(readstring)) do
-			//begin
-			//	while
-			//end;
 		end;
 
 		Close(UserFile);
