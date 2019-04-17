@@ -3,7 +3,7 @@ Program main;
 uses
 	uFileLoader, uDate,
 	cari, caritahunterbit, login, riwayat_peminjaman, statistik,
-	tambah_buku, tambah_jumlah_buku;
+	tambah_buku, tambah_jumlah_buku, uHilang;
 
 var
 	arrBuku : array[1..1000] of Buku;
@@ -42,6 +42,7 @@ begin
 	readln(filename);
 	LoadLaporanHilang(arrLaporanHilang, filename);
 	writeln('');
+
 end;
 procedure Menu_Admin();
 begin
@@ -187,6 +188,8 @@ begin
 	writeln('Data Laporan Kehilangan');
 	PrintLaporanHilang(arrLaporanHilang);
 	writeln('');
+
+	PrintLaporanWithJudul(arrLaporanHilang, arrBuku);
 	{load dulu}
 	Menu_Pengunjung();
 

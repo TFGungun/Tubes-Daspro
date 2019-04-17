@@ -345,8 +345,6 @@ implementation
 		
 
 		lenUser := (linecount-1);
-		writeln(lenUser);
-		writeln('lenuser');
 	end;
 
 	procedure PrintUser (var arrUser : UArr);

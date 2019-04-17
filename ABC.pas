@@ -1,7 +1,7 @@
 Program ABC;
 
 //uses //uFileLoader, cari, uDate, sysutilsmanual;
-uses uFileLoader;
+uses uFileLoader, uHilang;
 
 var
 	arrBuku : array[1..1000] of Buku;
@@ -19,7 +19,7 @@ begin
 	writeln('Data Buku');
 	LoadBuku(arrBuku, bukufilename);
 	PrintBuku(arrBuku);
-	{
+{
 	writeln('');
 	writeln('Data User');
 	LoadUser(arrUser);
@@ -33,11 +33,12 @@ begin
 	LoadHistoryPengembalian(arrHistoryPengembalian);
 	PrintHistoryPengembalian(arrHistoryPengembalian);
 	writeln('');
+}
 	writeln('Data Laporan Kehilangan');
 	LoadLaporanHilang(arrLaporanHilang);
 	PrintLaporanHilang(arrLaporanHilang);
+	PrintLaporanWithJudul(arrLaporanHilang)
 	writeln('');
-}
 	{
 	for k := 1 to (uFileLoader.GetSizeBuku()) do
 		begin
