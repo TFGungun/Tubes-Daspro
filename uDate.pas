@@ -19,6 +19,8 @@ interface
 
 	procedure WritelnDate(var dateofdate : Date);
 
+	procedure ProcessDate(dateComponent : integer); // Untuk memroses date yang hanya 1 karakter -> 2 karakter 
+
 implementation
 
 	function ParseDate(var datestring : string) : Date;
@@ -80,22 +82,33 @@ implementation
 			end;
 	end;
 
+	procedure ProcessDate(dateComponent : integer); // Untuk memroses date yang hanya 1 karakter -> 2 karakter 
+	begin
+		if((dateComponent/10) < 1) then
+		begin
+			write('0',dateComponent);
+		end else
+		begin
+			write(dateComponent);
+		end;
+	end;
+
 	procedure WriteDate(var dateofdate : Date);
 	begin
-		write(dateofdate.DD);
+		ProcessDate(dateofdate.DD);
 		write('/');
-		write(dateofdate.MM);
+		ProcessDate(dateofdate.MM);
 		write('/');
-		write(dateofdate.YYYY);
+		ProcessDate(dateofdate.YYYY);
 	end;
 
 	procedure WritelnDate(var dateofdate : Date);
 	begin
-		write(dateofdate.DD);
+		ProcessDate(dateofdate.DD);
 		write('/');
-		write(dateofdate.MM);
+		ProcessDate(dateofdate.MM);
 		write('/');
-		write(dateofdate.YYYY);
+		ProcessDate(dateofdate.YYYY);
 		writeln('');
 	end;
 end.

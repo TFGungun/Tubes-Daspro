@@ -65,7 +65,6 @@ interface
 
 	procedure LoadHistoryPeminjaman(var arrHistoryPeminjaman : PinjamArr ; filename : string);
 
-
 	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
 
 	procedure LoadHistoryPengembalian(var arrHistoryPengembalian : KembaliArr ;  filename : string);
@@ -74,7 +73,7 @@ interface
 
 	procedure LoadLaporanHilang(var arrLaporanHilang : HilangArr; filename : string);
 
-	//procedure PrintLaporanHilang(var arrLaporanHilang : HilangArr);
+	procedure PrintLaporanHilang(var arrLaporanHilang : HilangArr);
 
 
 
@@ -297,7 +296,6 @@ implementation
 							while (readstring[j] <> '"') do
 							begin
 								arrUser[i].Alamat := arrUser[i].Alamat + readstring[j];
-								writeln(arrUser[i].Alamat);
 								inc(j);
 							end;
 						end else
@@ -353,6 +351,7 @@ implementation
 	var
 		k : integer;
 	begin
+		writeln(lenUser);
 		for k := 1 to (lenUser) do
 		begin
 			write(k);
@@ -393,7 +392,7 @@ implementation
 		// Get buku.csv file size
 		system.Assign(F, filename);
 		system.Reset(F);
-		lenUser := FileSize(F);
+		lenHistoryPeminjaman := FileSize(F);
 		Close(F);
 
 		system.Assign(UserFile, filename);
@@ -429,32 +428,26 @@ implementation
 				readln(UserFile, readstring);
 				while (j <= length(readstring)) do
 				begin
-					writeln(comcount);
 					while (readstring[j] <> ',') and (j <= length(readstring)) do
 					begin
 						case comcount of
 						0 : begin
 							arrHistoryPeminjaman[i].Username := arrHistoryPeminjaman[i].Username + readstring[j];
-							writeln(arrHistoryPeminjaman[i].Username);
 							end;
 						1 : begin
 							arrHistoryPeminjaman[i].ID_Buku := arrHistoryPeminjaman[i].ID_Buku + readstring[j];
-							writeln(arrHistoryPeminjaman[i].ID_Buku);
 							end; 
 						2 : begin
 							temp_string := temp_string + readstring[j];
-							writeln(temp_string);
 							//arrHistoryPeminjaman[i].Username := arrHistoryPeminjaman[i].Username + readstring[j];
 							end; 
 						3 : begin
 							temp_string := temp_string + readstring[j];
-							writeln(temp_string);
 							
 							//arrHistoryPeminjaman[i].Password := arrHistoryPeminjaman[i].Password + readstring[j];
 							end; 
 						4 : begin
 							temp_string := temp_string + readstring[j];
-							writeln(temp_string);
 
 							//arrHistoryPeminjaman[i].Role := arrHistoryPeminjaman[i].Role + readstring[j];
 							end; 
@@ -496,10 +489,6 @@ implementation
 				inc(linecount);
 			end;
 
-			//while (j <= length(readstring)) do
-			//begin
-			//	while
-			//end;
 		end;
 
 		Close(UserFile);
@@ -552,7 +541,7 @@ implementation
 		// Get buku.csv file size
 		system.Assign(F, filename);
 		system.Reset(F);
-		lenUser := FileSize(F);
+		lenHistoryPengembalian := FileSize(F);
 		Close(F);
 
 		system.Assign(UserFile, filename);
@@ -671,7 +660,7 @@ implementation
 		// Get buku.csv file size
 		system.Assign(F, filename);
 		system.Reset(F);
-		lenUser := FileSize(F);
+		lenLaporanHilang := FileSize(F);
 		Close(F);
 
 		system.Assign(UserFile, filename);
@@ -754,4 +743,22 @@ implementation
 
 		lenLaporanHilang := (linecount-1);
 	end;
+
+	procedure PrintLaporanHilang(var arrLaporanHilang : HilangArr);
+	var
+		k : integer;
+	begin
+		for k := 1 to (lenLaporanHilang) do
+		begin
+			write(k);
+			write(' | ');
+			write(arrLaporanHilang[k].Username);
+			write(' | ');
+			write(arrLaporanHilang[k].ID_Buku);
+			write(' | ');
+			WriteDate(arrLaporanHilang[k].Tanggal_Laporan);
+			writeln();
+		end;
+	end;
+
 end.
