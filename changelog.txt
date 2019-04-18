@@ -1,4 +1,16 @@
 Changelog (17/04/2019)
 -registrasi.pas (delete parameter lenUser di procedure regis, klo ada itu gk keisi arrUsernya, lenuser awalnya gk ditambah)
+-login.pas tidak mengulang
 -peminjamanbuku.pas (found is always false, penambahan atribut lain blm ditanganin, kabisat belum ditanganin, month 12 belum ditanganin)
 -pengembalianbuku.pas (dibicarakan besok)
+
+
+userlogin 
+nama
+alamat
+username
+status
+role
+
+userlogin.username
+userlogin.role

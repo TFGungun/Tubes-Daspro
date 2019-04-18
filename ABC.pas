@@ -12,6 +12,7 @@ var
 	k : integer;
 	//a,d : Date;
 	b,c, bukufilename : string;
+	UserIn : User;
 
 begin
 	{
@@ -47,13 +48,21 @@ begin
 	readln(bukufilename);
 	SaveUser(arrUser, bukufilename);
 }
+	{write('Masukkan nama file user: ');
+		readln(bukufilename);
+		writeln('Data User');
+		LoadUser(arrUser, bukufilename);
+		Printuser(arrUser);
+		CariAnggota(arrUser);}
+
 	write('Masukkan nama file user: ');
 	readln(bukufilename);
 	writeln('Data User');
 	LoadUser(arrUser, bukufilename);
-	Printuser(arrUser);
-	CariAnggota(arrUser);
-{
+	PrintUser(arrUser);
+	UserIn := arrUser[1];
+
+
 	write('Masukkan nama file buku: ');
 	readln(bukufilename);
 	writeln('Data Buku');
@@ -66,13 +75,14 @@ begin
 	LoadHistoryPeminjaman(arrHistoryPeminjaman, bukufilename);
 	PrintHistoryPeminjaman(arrHistoryPeminjaman);
 	cek_riwayat(arrHistoryPeminjaman, arrBuku);
+	PinjamBuku(arrHistoryPeminjaman, arrBuku, UserIn);
 	writeln(lenHistoryPeminjaman);
 	PrintHistoryPeminjaman(arrHistoryPeminjaman);
 
 	write('Masukkan nama file Peminjaman: ');
 	readln(bukufilename);
 	SaveHistoryPeminjaman(arrHistoryPeminjaman, bukufilename);
-}
+
 {
 	write('Masukkan nama file buku: ');
 	readln(bukufilename);

@@ -2,8 +2,9 @@ Program main;
 
 uses
 	uFileLoader, uDate,
-	cari, caritahunterbit, login, riwayat_peminjaman, statistik,
-	tambah_buku, tambah_jumlah_buku, uHilang;
+	cari, caritahunterbit, login, registrasi, riwayat_peminjaman, statistik,
+	tambah_buku, tambah_jumlah_buku, uHilang, uAnggota, parsertuanyon, uFileSaver,
+	PeminjamanBuku;
 
 var
 	arrBuku : array[1..1000] of Buku;
@@ -13,6 +14,8 @@ var
 	arrLaporanHilang : array[1..1000] of LaporanHilang;
 	k : integer;
 	x, filename : string;
+	userIn : User;
+	isProgramRunning : boolean;
 
 procedure Load_File();
 begin
@@ -44,8 +47,52 @@ begin
 	writeln('');
 
 end;
+
+procedure Save_File();
+begin
+	write('Masukkan nama File Buku: ');
+	readln(filename);
+	SaveBuku(arrBuku, filename);
+	writeln('');
+
+
+	write('Masukkan nama File User: ');
+	readln(filename);
+	SaveUser(arrUser, filename);
+	writeln('');
+
+
+	write('Masukkan nama File Peminjaman: ');
+	readln(filename);
+	SaveHistoryPeminjaman(arrHistoryPeminjaman, filename);
+	writeln('');
+
+	write('Masukkan nama File Pengembalian: ');
+	readln(filename);
+	SaveHistoryPengembalian(arrHistoryPengembalian, filename);
+	writeln('');
+
+	write('Masukkan nama File Buku hilang: ');
+	readln(filename);
+	SaveLaporanHilang(arrLaporanHilang, filename);
+	writeln('');
+
+end;
+
+
+procedure LogoutUser();
+begin
+	userIn.Nama := '';
+	userIn.Alamat := '';
+	userIn.Username := '';
+	userIn.Password := '';
+	userIn.Role := '';
+	userIn.Status := false;
+end;
+
 procedure Menu_Admin();
 begin
+	writeln('---------------------------------------------------------');
 	writeln('$ register : daftar anggota perpustakaan baru');
 	writeln('$ cari : cari buku berdasarkan kategori');
 	writeln('$ caritahunterbit : cari buku berdasarkan tahun terbit');
@@ -58,6 +105,8 @@ begin
 	writeln('$ save : menyimpan data');
 	writeln('$ logout : keluar');
 	writeln('$ exit : keluar program');
+	writeln('---------------------------------------------------------');
+	write('> ');
 	readln(x);
 	case x of
 		'cari': begin
@@ -67,7 +116,7 @@ begin
 								year(arrBuku);
 							end;
 		'lihat_laporan': begin
-						
+							PrintLaporanWithJudul(arrLaporanHilang, arrBuku);
 						end;
 		'tambah_buku': begin
 							add(arrBuku);
@@ -78,26 +127,27 @@ begin
 		'riwayat': begin
 						cek_riwayat(arrHistoryPeminjaman, arrBuku);
 					end;
-		'statisik': begin
+		'statistik': begin
 						list_statistik(arrBuku, arrUser);
 					end;
 		'cari_anggota': begin
-							
+							CariAnggota(arrUser);
 						end;
 		'save': begin
-				
+					Save_File()
 				end;
 		'logout': begin
-			
+						LogoutUser()
 					end;
 		'exit': begin
-			
+					isProgramRunning := false;
 				end;
 	end;
 end;
 
-procedure Menu_Pengunjung_L();
+procedure Menu_Pengunjung();
 begin
+	writeln('---------------------------------------------------------');
 	writeln('$ cari : cari buku berdasarkan kategori');
 	writeln('$ caritahunterbit : cari buku berdasarkan tahun terbit');
 	writeln('$ pinjam_buku : isi data untuk meminjam buku');
@@ -106,6 +156,8 @@ begin
 	writeln('$ save : menyimpan data');
 	writeln('$ logout : keluar');
 	writeln('$ exit : keluar program');
+	writeln('---------------------------------------------------------');
+	write('> '); 
 	readln(x);
 	case x of
 		'cari': begin
@@ -115,43 +167,56 @@ begin
 								year(arrBuku);
 							end;
 		'pinjam_buku': begin
-						
+							PinjamBuku(arrHistoryPeminjaman, arrBuku, userIn);
 						end;
+		'kembalikan_buku' : begin
+
+							end;
 		'lapor_hilang': begin
 						
 						end;
 		'save': begin
-			
+					Save_File();
 				end;
 		'logout': begin
-			
+						LogoutUser();
 					end;
 		'exit': begin
-			
+					isProgramRunning := false;
 				end;
 	end;
 end;
 
-procedure Menu_Pengunjung();
+
+
+procedure Menu_User();
 begin
+	writeln('---------------------------------------------------------');
 	writeln('$ login : login anggota perpustakaan');
 	writeln('$ cari : cari buku berdasarkan kategori');
 	writeln('$ caritahunterbit : cari buku berdasarkan tahun terbit');
-	writeln('$ lapor_hilang : mengajukan laporan buku hilang');
 	writeln('$ save : menyimpan data');
 	writeln('$ exit : keluar program');
+	writeln('---------------------------------------------------------');
+	write('> ');
 	readln(x);
 	case x of
 		'login': begin
-					log_in(arrUser);
-					//if(arrUser[i].Role = 'Admin') then
-					//	begin
-					//		Menu_Admin();
-					//	end
-					//else
-					//	begin
-					//		Menu_Pengunjung_L();
-					//	end;
+					log_in(arrUser, userIn);
+					if(userIn.Role = 'Admin') then
+						begin
+							while((isProgramRunning) and (userIn.Status)) do
+							begin
+								Menu_Admin();
+							end;
+						end
+					else
+						begin
+							while((isProgramRunning) and (userIn.Status)) do
+							begin
+								Menu_Pengunjung();
+							end;
+						end;
 				 end;
 		'cari': begin
 					search(arrBuku);			
@@ -159,41 +224,26 @@ begin
 		'caritahunterbit': begin
 								year(arrBuku);
 							end;
-		'lapor_hilang': begin
-			
-						end;
 		'save': begin
-			
+					Save_File();
 				end;
 		'exit': begin
-			
+					isProgramRunning := false;
 				end;
 	end;
 end;
 
 begin
+
+	// Memulai program dengan me-load semua file data perpustakaan
 	Load_File();
-	writeln('Data Buku');
-	PrintBuku(arrBuku);
-	writeln('');
-	writeln('Data User');
-	PrintUser(arrUser);
-	writeln('');
-	writeln('Data History Peminjaman');
-	PrintHistoryPeminjaman(arrHistoryPeminjaman);
-	writeln('');
-	writeln('Data History Pengembalian');
-	PrintHistoryPengembalian(arrHistoryPengembalian);
-	writeln('');
-	writeln('Data Laporan Kehilangan');
-	PrintLaporanHilang(arrLaporanHilang);
-	writeln('');
 
-	PrintLaporanWithJudul(arrLaporanHilang, arrBuku);
-	{load dulu}
-	Menu_Pengunjung();
+	// Set isProgramRunning True untuk menandakan program sedang berjalan
+	isProgramRunning := true;
 
-	{LoadBuku(arrBuku);
-	LoadUser(arrUser);
-	list_statistik(arrBuku, arrUser);}
+	// Menjalankan Menu User sebagai program utama
+	while (isProgramRunning) do
+	begin
+		Menu_User();
+	end;
 end.

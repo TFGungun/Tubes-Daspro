@@ -51,7 +51,6 @@ procedure year(var arrBuku: BArr);
 								count := count+1;
 								writeln(arrBuku[i].ID_Buku, ' | ', arrBuku[i].Judul_Buku, ' | ', arrBuku[i].Author);
 							end;
-					}
 					end else if(k = '>=') then 					{ proses kasus input k adalah >= (lebih besar sama dengan) }
 						begin
 							if(arrBuku[i].Tahun_Penerbit >= t) then { proses kasus tahun terbit data lebih besar sama dengan input t }
@@ -59,7 +58,6 @@ procedure year(var arrBuku: BArr);
 								count := count+1;
 								writeln(arrBuku[i].ID_Buku, ' | ', arrBuku[i].Judul_Buku, ' | ', arrBuku[i].Author);
 							end;
-					}
 					end else if(k = '<=') then 					{ proses kasus input k adalah <= (lebih kecil sama dengan) }
 						begin
 							if(arrBuku[i].Tahun_Penerbit <= t) then { proses kasus tahun terbit data lebih kecil sama dengan input t }

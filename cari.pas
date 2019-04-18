@@ -51,6 +51,5 @@ procedure search(var arrBuku: BArr);
 			end;
 		if(count = 0) then 						{ proses kasus tidak ada buku yang sesuai kategori input }
 			writeln('Tidak ada buku dalam kategori ini.');
-		}
 	end;
 end.

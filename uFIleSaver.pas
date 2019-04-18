@@ -82,9 +82,9 @@ implementation
 		begin
 			writeln(UserFile, arrHistoryPeminjaman[i].Username, ',', arrHistoryPeminjaman[i].ID_Buku, ',', 
 				arrHistoryPeminjaman[i].Tanggal_Peminjaman.DD, '/',arrHistoryPeminjaman[i].Tanggal_Peminjaman.MM, '/',
-				arrHistoryPeminjaman[i].Tanggal_Peminjaman.YYYY, '/', ',',
+				arrHistoryPeminjaman[i].Tanggal_Peminjaman.YYYY, ',',
 				arrHistoryPeminjaman[i].Tanggal_Batas_Pengembalian.DD, '/', arrHistoryPeminjaman[i].Tanggal_Batas_Pengembalian.MM, '/',
-				arrHistoryPeminjaman[i].Tanggal_Batas_Pengembalian.YYYY, '/', ',',
+				arrHistoryPeminjaman[i].Tanggal_Batas_Pengembalian.YYYY, ',',
 				arrHistoryPeminjaman[i].Status_Pengembalian);
 		end;
 
@@ -126,7 +126,7 @@ implementation
 		system.Assign(UserFile, filename);
 		system.Rewrite(UserFile);
 
-		header := 'Username,ID_Buku,Tanggal_Laporan';
+		header := 'Username,ID_Buku_Hilang,Tanggal_Laporan';
 		writeln(UserFile, header);
 
 		for i := 1 to lenLaporanHilang do

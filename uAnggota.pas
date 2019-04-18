@@ -1,7 +1,7 @@
 unit uAnggota;
 
 interface
-	uses uFileLoader;
+	uses uFileLoader, uDate, parsertuanyon;
 
 	procedure CariAnggota(var arrUser : UArr);
 

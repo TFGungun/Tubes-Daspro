@@ -443,7 +443,6 @@ implementation
 							end; 
 						3 : begin
 							temp_string := temp_string + readstring[j];
-							
 							//arrHistoryPeminjaman[i].Password := arrHistoryPeminjaman[i].Password + readstring[j];
 							end; 
 						4 : begin
