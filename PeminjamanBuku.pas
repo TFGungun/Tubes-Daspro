@@ -51,7 +51,6 @@ implementation
 		i := 1;
 		while (not found) and (i <= lenBuku) do// (size.arrBuku) diganti lenBuku karena sudah dibuat global variable
 		begin
-			writeln(arrBuku[i].ID_Buku);
 			if  (arrBuku[i].ID_Buku = id) and (arrBuku[i].Jumlah_Buku > 0) then
 			begin
 				found := true;
