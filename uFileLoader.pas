@@ -101,14 +101,10 @@ interface
 	{I.S. : arrBuku sudah berisi data dari file buku dan/atau modifikasi di main program}
 	{F.S. :	arrBuku tercetak ke layar sesuai format data buku}
 
-	function GetSizeBuku ()	: longint;
-
 	procedure PrintUser (var arrUser : UArr);
 	{Menulis elemen-elemen dari arrUser ke layar dengan format sesuai data user}
 	{I.S. : arrUser sudah berisi data dari file user dan/atau modifikasi di main program}
 	{F.S. :	arrUser tercetak ke layar sesuai format data user}
-
-	function GetSizeUser () : longint;
 
 	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
 	{Menulis elemen-elemen dari arrHistoryPeminjaman ke layar dengan format sesuai data riwayat peminjaman}
@@ -125,12 +121,14 @@ interface
 	{I.S. : arrLaporanHilang sudah berisi data dari file laporan hilang dan/atau modifikasi di main program}
 	{F.S. :	arrLaporanHilang tercetak ke layar sesuai format data laporan hilang}
 
+	{KAMUS GLOBAL}
 	var
 		lenBuku : longint;					{Penanda banyaknya elemen arrBuku}
 		lenUser : longint;					{Penanda banyaknya elemen arrUser}
 		lenHistoryPeminjaman : longint;		{Penanda banyaknya elemen arrHistoryPeminjaman}
 		lenHistoryPengembalian : longint;	{Penanda banyaknya elemen arrHistoryPengembalian}
 		lenLaporanHilang : longint;			{Penanda banyaknya elemen arrLaporanHilang}
+	}
 
 implementation
 	
@@ -241,11 +239,6 @@ implementation
 		
 
 		lenBuku := (linecount-1);
-	end;
-
-	function GetSizeBuku()	: longint;
-	begin
-		GetSizeBuku := lenBuku;
 	end;
 
 	procedure PrintBuku (var arrBuku : BArr);
@@ -405,11 +398,6 @@ implementation
 			write(arrUser[k].Role);
 			writeln();
 		end;
-	end;
-
-	function GetSizeUser () : longint;
-	begin
-		GetSizeUser := lenUser;
 	end;
 
 	procedure LoadHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr ; filename : string);
