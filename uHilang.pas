@@ -19,9 +19,9 @@ implementation
 
 		for i := 1 to lenLaporanHilang do
 		begin
-			write(arrLaporanHilang[i].ID_Buku);
+			write(arrLaporanHilang[i].ID_Buku_Hilang);
 			write(' | ');
-			write(CariJudulBuku(arrBuku, arrLaporanHilang[i].ID_Buku));
+			write(CariJudulBuku(arrBuku, arrLaporanHilang[i].ID_Buku_Hilang));
 			write(' | ');
 			WritelnDate(arrLaporanHilang[i].Tanggal_Laporan);
 		end;

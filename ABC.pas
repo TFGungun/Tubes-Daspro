@@ -1,7 +1,7 @@
 Program ABC;
 
 //uses //uFileLoader, cari, uDate, sysutilsmanual;
-uses uFileLoader, uAnggota, uHilang, uFileSaver, tambah_buku, registrasi, PeminjamanBuku, riwayat_peminjaman;
+uses parsertuanyon,uFileLoader, uAnggota, uHilang, uFileSaver, tambah_buku, registrasi, PeminjamanBuku, riwayat_peminjaman;
 
 var
 	arrBuku : array[1..1000] of Buku;
@@ -15,6 +15,8 @@ var
 	UserIn : User;
 
 begin
+	b := IntToHex(256);
+	//writeln(b);
 	{
 	write('Masukkan nama file buku: ');
 	readln(bukufilename);
@@ -54,7 +56,7 @@ begin
 		LoadUser(arrUser, bukufilename);
 		Printuser(arrUser);
 		CariAnggota(arrUser);}
-
+{
 	write('Masukkan nama file user: ');
 	readln(bukufilename);
 	writeln('Data User');
@@ -82,7 +84,7 @@ begin
 	write('Masukkan nama file Peminjaman: ');
 	readln(bukufilename);
 	SaveHistoryPeminjaman(arrHistoryPeminjaman, bukufilename);
-
+}
 {
 	write('Masukkan nama file buku: ');
 	readln(bukufilename);

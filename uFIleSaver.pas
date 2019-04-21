@@ -131,7 +131,7 @@ implementation
 
 		for i := 1 to lenLaporanHilang do
 		begin
-			writeln(UserFile, arrLaporanHilang[i].Username, ',', arrLaporanHilang[i].ID_Buku, ',', 
+			writeln(UserFile, arrLaporanHilang[i].Username, ',', arrLaporanHilang[i].ID_Buku_Hilang, ',', 
 				arrLaporanHilang[i].Tanggal_Laporan.DD, '/',arrLaporanHilang[i].Tanggal_Laporan.MM, '/',
 				arrLaporanHilang[i].Tanggal_Laporan.YYYY);
 		end;

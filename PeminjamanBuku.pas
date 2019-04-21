@@ -30,26 +30,25 @@ uses uFileLoader, uDate;
 		end;
 	}
 
-	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; arrBuku : BArr ; UserIn : User); // tambah procedure agar bisa digunakan lebih mudah
+	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; var arrBuku : BArr ; UserIn : User); // tambah procedure agar bisa digunakan lebih mudah
 
 
 
 implementation
 	
-	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; arrBuku : BArr ; UserIn : User);
+	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; var arrBuku : BArr ; UserIn : User);
 
 	var
 		found : boolean;
 		i, Tahun, Bulan, Hari : integer; // tambah Tahun Bulan hari karena dipakai di bawah
 		tanggalpinjamstring, id : string; // tambah variabel tanggalpinjam untuk menyimpan tanggal peminjaman
-		tanggalpinjam : Date;
 
 	begin
 		write('Masukkan id buku yang ingin dipinjam : ');
 		readln(id); 
 		found := false;
 		i := 1;
-		while (not found) and (i <= lenBuku) do// (size.arrBuku) diganti lenBuku karena sudah dibuat global variable
+		while (not found) and (i <= lenBuku) do
 		begin
 			if  (arrBuku[i].ID_Buku = id) and (arrBuku[i].Jumlah_Buku > 0) then
 			begin

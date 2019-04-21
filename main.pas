@@ -4,7 +4,7 @@ uses
 	uFileLoader, uDate,
 	cari, caritahunterbit, login, registrasi, riwayat_peminjaman, statistik,
 	tambah_buku, tambah_jumlah_buku, uHilang, uAnggota, parsertuanyon, uFileSaver,
-	PeminjamanBuku;
+	PeminjamanBuku, PengembalianBuku, lapor_hilang;
 
 var
 	arrBuku : array[1..1000] of Buku;
@@ -170,10 +170,10 @@ begin
 							PinjamBuku(arrHistoryPeminjaman, arrBuku, userIn);
 						end;
 		'kembalikan_buku' : begin
-
+								KembalikanBuku(arrHistoryPengembalian, arrHistoryPeminjaman, arrBuku, UserIn);
 							end;
 		'lapor_hilang': begin
-						
+							LaporKehilangan(arrLaporanHilang, arrBuku, UserIn);
 						end;
 		'save': begin
 					Save_File();

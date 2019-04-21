@@ -49,7 +49,6 @@ begin
                 login := true;
                 arrUser[i].Status := true;
                 UserIn := arrUser[i];
-                writeln(UserIn.Status);
             end else
     
             //jika password salah, kirim msg.
