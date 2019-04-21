@@ -128,7 +128,6 @@ interface
 		lenHistoryPeminjaman : longint;		{Penanda banyaknya elemen arrHistoryPeminjaman}
 		lenHistoryPengembalian : longint;	{Penanda banyaknya elemen arrHistoryPengembalian}
 		lenLaporanHilang : longint;			{Penanda banyaknya elemen arrLaporanHilang}
-	}
 
 implementation
 	

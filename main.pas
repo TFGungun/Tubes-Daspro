@@ -140,6 +140,12 @@ begin
 						LogoutUser()
 					end;
 		'exit': begin
+					writeln('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan? (Y/N)');
+					readln(x);
+					if (x = 'Y') then
+					begin
+						Save_File();
+					end;
 					isProgramRunning := false;
 				end;
 	end;
@@ -182,6 +188,12 @@ begin
 						LogoutUser();
 					end;
 		'exit': begin
+					writeln('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan? (Y/N)');
+					readln(x);
+					if (x = 'Y') then
+					begin
+						Save_File();
+					end;
 					isProgramRunning := false;
 				end;
 	end;
@@ -228,6 +240,12 @@ begin
 					Save_File();
 				end;
 		'exit': begin
+					writeln('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan? (Y/N)');
+					readln(x);
+					if (x = 'Y') then
+					begin
+						Save_File();
+					end;
 					isProgramRunning := false;
 				end;
 	end;

@@ -4,31 +4,6 @@ interface
 	
 	
 uses uFileLoader, uDate;
-	{ // Dipersingkat dengan menggunakan uFileLoader dan uDate
-	type
-		Buku = record
-			ID_Buku 		: string;
-			Judul_Buku		: string;
-			Author 			: string;
-			Jumlah_Buku		: integer;
-			Tahun_Penerbit	: integer;
-			Kategori 		: string;
-		end;
-
-		Date = record
-			DD 		: integer;
-			MM 		: integer;
-			YYYY 	: integer;
-		end;
-
-		HistoryPeminjaman = record
-			Username					: string;
-			ID_Buku						: string;
-			Tanggal_Peminjaman 			: Date;
-			Tanggal_Batas_Pengembalian 	: Date;
-			Status_Pengembalian 		: boolean;
-		end;
-	}
 
 	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; var arrBuku : BArr ; UserIn : User); // tambah procedure agar bisa digunakan lebih mudah
 
@@ -61,7 +36,7 @@ implementation
 		end;	
 		write('Masukkan tanggal hari ini: ');
 		readln(tanggalpinjamstring);
-		//WriteDate(arrHistoryPeminjaman[lenHistoryPeminjaman + 1].Tanggal_Peminjamane);
+		
 
 		// Dipindahin dari atas biar menjamin hanya nambah ketika found
 		
