@@ -109,6 +109,9 @@ begin
 	write('> ');
 	readln(x);
 	case x of
+		'register' : begin
+						regis(arrUser);
+					 end;
 		'cari': begin
 					search(arrBuku);			
 				end;
@@ -125,7 +128,7 @@ begin
 								amount(arrBuku);
 								end;
 		'riwayat': begin
-						cek_riwayat(arrHistoryPeminjaman, arrBuku);
+						cek_riwayat(arrHistoryPengembalian, arrBuku);
 					end;
 		'statistik': begin
 						list_statistik(arrBuku, arrUser);

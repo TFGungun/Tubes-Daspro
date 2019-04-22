@@ -40,7 +40,7 @@ procedure search(var arrBuku: BArr);
 				write('Masukkan kategori: ');
 				readln(k);				{ next element }
 			end;
-		while(i<=GetSizeBuku()) do 		{ EOP : i > GetSizeBuku() }
+		while(i<=lenBuku) do 		{ EOP : i > lenBuku }
 			begin
 				if(k = arrBuku[i].Kategori) then { proses kasus kategori pada data sesuai input }
 					begin

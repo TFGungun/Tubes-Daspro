@@ -28,7 +28,7 @@ procedure year(var arrBuku: BArr);
 		readln(k);
 		writeln();
 		writeln('Buku yang terbit ', k, ' ', t, ' :');
-		while(i<=GetSizeBuku()) do { EOP : i > GetSizeBuku }
+		while(i<=lenBuku) do { EOP : i > GetSizeBuku }
 			begin
 				if(k = '=') then 								{ proses kasus input k adalah = (sama dengan) }
 				begin

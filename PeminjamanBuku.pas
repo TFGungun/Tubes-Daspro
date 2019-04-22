@@ -1,4 +1,6 @@
 unit PeminjamanBuku;
+// PeminjamanBuku
+// Unit yang menangani data peminjaman buku
 
 interface
 	
@@ -6,7 +8,9 @@ interface
 uses uFileLoader, uDate;
 
 	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; var arrBuku : BArr ; UserIn : User); // tambah procedure agar bisa digunakan lebih mudah
-
+	{Mengisi data yang diinputkan oleh pengguna ke dalam arrHistoryPeminjaman}
+	{I.S. : arrHistoryPeminjaman sudah berisi data dari file riwayat peminjaman dan/atau modifikasi di main program}
+	{F.S. :	arrHistoryPeminjaman tercetak ke layar sesuai format data riwayat peminjaman}
 
 
 implementation
@@ -15,15 +19,19 @@ implementation
 
 	var
 		found : boolean;
-		i, Tahun, Bulan, Hari : integer; // tambah Tahun Bulan hari karena dipakai di bawah
-		tanggalpinjamstring, id : string; // tambah variabel tanggalpinjam untuk menyimpan tanggal peminjaman
+		i, Tahun, Bulan, Hari : integer; 
+		tanggalpinjamstring, id : string; //  variabel tanggalpinjam untuk menyimpan tanggal peminjaman
 
 	begin
 		write('Masukkan id buku yang ingin dipinjam : ');
 		readln(id); 
 		found := false;
 		i := 1;
-		while (not found) and (i <= lenBuku) do
+		while (not found) and (i <= lenBuku) do 
+		// Pengulangan iterate-stop ketika data belum 
+		// ditemukan dan indeks i kurang dari sama dengan lenbuku
+		// Pengulangan dicari untuk memastikan buku yang ingin dipinjam masih tersedia atau
+		// sudah habis
 		begin
 			if  (arrBuku[i].ID_Buku = id) and (arrBuku[i].Jumlah_Buku > 0) then
 			begin
@@ -35,24 +43,29 @@ implementation
 			end;
 		end;	
 		write('Masukkan tanggal hari ini: ');
-		readln(tanggalpinjamstring);
-		
+		readln(tanggalpinjamstring); // Data tanggal yang dimasukkan berupa string
 
-		// Dipindahin dari atas biar menjamin hanya nambah ketika found
-		
+
 		if (found = true) then
+		// Jika jumlah buku lebih dari 0 dan masih terjadi
 		begin
-			arrHistoryPeminjaman[lenHistoryPeminjaman + 1].Tanggal_Peminjaman := ParseDate(tanggalpinjamstring);
-
+			arrHistoryPeminjaman[lenHistoryPeminjaman + 1].Tanggal_Peminjaman := ParseDate(tanggalpinjamstring); 
+			// Mengubah masukan tanggal yang berupa string menjadi type yang berbentuk Date
+			
 			arrHistoryPeminjaman[lenHistoryPeminjaman + 1].ID_Buku := id;
+	
+			
 			writeln('Buku ', arrBuku[i].Judul_Buku, ' berhasil dipinjam!');
 			arrHistoryPeminjaman[lenHistoryPeminjaman + 1].Tanggal_Peminjaman := ParseDate(tanggalpinjamstring);
-			// Dipindahin dari atas biar menjamin hanya nambah ketika found
+			 
+			
 			Tahun := arrHistoryPeminjaman[lenHistoryPeminjaman + 1].Tanggal_Peminjaman.YYYY;
 			Bulan := arrHistoryPeminjaman[lenHistoryPeminjaman + 1].Tanggal_Peminjaman.MM;
 			Hari := arrHistoryPeminjaman[lenHistoryPeminjaman + 1].Tanggal_Peminjaman.DD;
 			
-
+			
+			// Program yang digunakan untuk menangani Tanggal Batas Pengembalian yaitu 7 hari setelah
+			// Tanggal Peminjaman
 			if (Bulan = 1) or (Bulan = 3) or (Bulan = 5) or (Bulan = 7) or (Bulan = 8) or (Bulan = 10) then
 			begin
 				if (Hari >= 1) and (Hari <= 24) then
@@ -124,24 +137,16 @@ implementation
 			end;
 			arrBuku[i].Jumlah_Buku := arrBuku[i].Jumlah_Buku - 1;
 			arrHistoryPeminjaman[lenHistoryPeminjaman + 1].Username := UserIn.Username;
+			// Data username diimpor dari file uFileLoader
+			
 			writeln('Tersisa ', arrBuku[i].Jumlah_Buku,' ', arrBuku[i].Judul_Buku);
 			writeln('Terima kasih sudah meminjam');
 			lenHistoryPeminjaman := lenHistoryPeminjaman + 1
-		end else
+		end else // Jika jumlah buku tidak lebih besar dari 0 (tidak tersedia)
 		begin
 			writeln('Buku ', arrBuku[i].Judul_Buku, ' sedang habis!');
 			writeln('Coba lain kali');
 		end;
 	end;
 end.
-
-
-
-
-
-
-
-
-
-
 

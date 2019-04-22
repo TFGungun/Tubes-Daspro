@@ -1,7 +1,7 @@
 unit statistik;
-
+{ mencetak jumlah admin, pengguna, dan buku berdasarkan kategorinya }
 interface
-	// here comes stuff that the unit publicly offers
+
 uses uFileLoader;
 
 procedure countPengguna(arrUser: UArr);
@@ -10,21 +10,25 @@ procedure list_statistik (var arrBuku: BArr; var arrUser: UArr);
 
 
 implementation
-	// here comes the implementation of offered stuff and
-	// optionally internal stuff (only known in the unit)
+
 procedure countPengguna(arrUser: UArr);
+{ menghitung dan mencetak jumlah anggota; admin dan pengunjung }
+
+	{ KAMUS }
 	var
-		a, p, i: Integer;
+		a, p, i: Integer; { a untuk menghitung jumlah admin, p untuk pengurus, i sebagai indeks array user}
+
+	{ ALGORITMA }
 	begin
-		a := 0;
+		a := 0;					{ inisialisasi }
 		p := 0;
-		for i:= 1 to lenUser do
+		for i:= 1 to lenUser do { EOP : i = banyak data user }
 			begin
-				if(arrUser[i].Role = 'Admin') then
+				if(arrUser[i].Role = 'Admin') then { proses kasus role user = Admin }
 					begin
 						a:=a+1;
 					end
-				else // arrUser[i].Role = 'Pengunjung'
+				else { arrUser[i].Role = 'Pengunjung'; proses kasus role user = Pengunjung }
 					begin
 						p:=p+1;
 					end;
@@ -35,39 +39,50 @@ procedure countPengguna(arrUser: UArr);
 	end;
 
 procedure countBuku(arrBuku: BArr);
+{ menghitung dan mencetak jumlah buku berdasarkan kategori }
+	
+	{ KAMUS }
 	var
 	i, sastra, sains, sejarah, manga, programming : integer;
+	{ i indeks array buku, sastra menghitung jumlah buku kategori sastra,
+	  sains menghitung jumlah buku kategori sains,
+	  sejarah menghitung jumlah buku kategori sejarah,
+	  manga menghitung jumlah buku kategori manga,
+	  programming menghitung jumlah buku kategori programming
+	}
 	
+	{ ALGORITMA }
 	begin
+	{ inisialisasi }
 	sastra := 0;
 	sains := 0;
 	sejarah := 0;
 	manga := 0;
 	programming := 0;
 	
-	for i:=1 to lenBuku do
+	for i:=1 to lenBuku do { EOP : i = banyak data buku}
 		begin
-		if (arrBuku[i].Kategori = 'sastra') then
+		if (arrBuku[i].Kategori = 'sastra') then { proses kasus kategori pada array = sastra }
 			begin
 			sastra := sastra + 1;
 			end
 		
-		else if (arrBuku[i].Kategori = 'sains') then
+		else if (arrBuku[i].Kategori = 'sains') then { proses kasus kategori pada array = sains }
 			begin
 			sains := sains + 1;
 			end
 		
-		else if (arrBuku[i].Kategori = 'sejarah') then
+		else if (arrBuku[i].Kategori = 'sejarah') then { proses kasus kategori pada array = sejarah }
 			begin
 			sejarah := sejarah + 1;
 			end
 	
-		else if (arrBuku[i].Kategori = 'manga') then
+		else if (arrBuku[i].Kategori = 'manga') then { proses kasus kategori pada array = manga }
 			begin
 			manga := manga + 1;
 			end
 	
-		else //if (arrBuku[i].Kategori = programming)
+		else {if (arrBuku[i].Kategori = programming); { proses kasus kategori pada array = programming }}
 			begin
 			programming := programming + 1;
 			end;
@@ -82,6 +97,9 @@ procedure countBuku(arrBuku: BArr);
 	end;
 
 procedure list_statistik( var arrBuku: BArr; var arrUser: UArr);
+{ memanggil prosedur countPengguna dan countBuku }
+
+	{ ALGORITMA }
 	begin
 		writeln('Pengguna: ');
 		countPengguna(arrUser);

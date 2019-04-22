@@ -5,16 +5,8 @@ uses
 	uFileLoader;
 
 procedure add(var arrBuku: BArr);
-function GetSize(): Integer;
-
+	
 implementation
-
-function GetSize(): Integer;
-{ mengambil ukuran data dari uFileloader yaitu lenBuku }
-	begin
-		GetSize := lenBuku;
-	end;
-
 
 procedure add(var arrBuku: BArr);
 { Memasukkan data buku baru ke dalam array buku
@@ -26,17 +18,18 @@ procedure add(var arrBuku: BArr);
 	begin
 		writeln('Masukkan Informasi buku yang ditambahkan: ');
 		write('Masukkan id buku: ');
-		readln(arrBuku[GetSizeBuku()+1].ID_Buku); {memasukkan ID Buku baru dengan indeks jumlah data bertambah 1}
+		lenBuku := lenBuku + 1; { panjang data bertambah 1 }
+		readln(arrBuku[lenBuku+1].ID_Buku); {memasukkan ID Buku baru dengan indeks jumlah data bertambah 1}
 		write('Masukkan judul buku: ');
-		readln(arrBuku[GetSizeBuku()+1].Judul_Buku); {memasukkan Judul Buku baru dengan indeks jumlah data bertambah 1}
+		readln(arrBuku[lenBuku+1].Judul_Buku); {memasukkan Judul Buku baru dengan indeks jumlah data bertambah 1}
 		write('Masukkan pengarang buku: ');
-		readln(arrBuku[GetSizeBuku()+1].Author); {memasukkan Author baru dengan indeks jumlah data bertambah 1} 
+		readln(arrBuku[lenBuku+1].Author); {memasukkan Author baru dengan indeks jumlah data bertambah 1} 
 		write('Masukkan jumlah buku: ');
-		readln(arrBuku[GetSizeBuku()+1].Jumlah_Buku); {memasukkan Jumlah Buku baru dengan indeks jumlah data bertambah 1}
+		readln(arrBuku[lenBuku+1].Jumlah_Buku); {memasukkan Jumlah Buku baru dengan indeks jumlah data bertambah 1}
 		write('Masukkan tahun terbit buku: ');
-		readln(arrBuku[GetSizeBuku()+1].Tahun_penerbit); {memasukkan Tahun penerbit baru dengan indeks jumlah data bertambah 1}
+		readln(arrBuku[lenBuku+1].Tahun_penerbit); {memasukkan Tahun penerbit baru dengan indeks jumlah data bertambah 1}
 		write('Masukkan kategori: ');
-		readln(arrBuku[GetSizeBuku()+1].Kategori); {memasukkan Kategori baru dengan indeks jumlah data bertambah 1}
+		readln(arrBuku[lenBuku+1].Kategori); {memasukkan Kategori baru dengan indeks jumlah data bertambah 1}
 		writeln();
 		writeln('Buku berhasil ditambahkan ke dalam sistem!');
 		lenBuku := lenBuku + 1; { panjang data bertambah 1 }

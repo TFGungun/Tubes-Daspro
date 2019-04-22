@@ -6,7 +6,11 @@ interface
 uses uDate, uFileLoader;
 		
 	procedure LaporKehilangan(var arrlaporanHilang : HilangArr ; arrBuku : BArr; UserIn : User);
-
+	{Mengisi data yang diinputkan oleh pengguna untuk melaporkan buku yang hilang ke dalam 
+	array Laporan Hilang}
+	{I.S. : arrLaporanHilang sudah berisi data dari file riwayat laporan hilang dan/atau modifikasi di main program}
+	{F.S. :	arrLaporanHilang tercetak ke layar sesuai format data riwayat laporan hilang}
+	
 implementation
 
 	procedure LaporKehilangan(var arrlaporanHilang : HilangArr ; arrBuku : BArr; UserIn : User);
@@ -16,10 +20,13 @@ implementation
 		i, indexlost : integer;
 
 	begin
+		// Pengguna menginput id buku yang berbentuk string yang kemudian disimpan
+		// di array LaporanHilang
 		write('Masukkan id buku: ');
 		readln(idhilang);
 		arrLaporanHilang[lenLaporanHilang + 1].ID_Buku_Hilang := idhilang;
 		
+		// untuk mencari indeks ke-i dari buku yang hilang
 		for i := 1 to lenBuku do
 		begin
 			if arrBuku[i].ID_Buku = idhilang then
@@ -31,19 +38,17 @@ implementation
 		
 		write('Masukkan judul buku: ');
 		readln(judulbukuhilang);
-		//arrLaporanHilang[indexlost].Judul_Buku := judulbukuhilang;
-		//arrBuku[indexlost].Jumlah_Buku := arrBuku[indexlost].Jumlah_Buku - 1; tidak perlu karena sudah ditangani saat meminjam buku
 		
+		// Pengguna menginput tanggal laporan kehilangan yang berbentuk string dan menyimpan
+		// nilainya ke dalam array LaporanHilang
 		write('Masukkan tanggal pelaporan: ');
 		readln(tanggallaporstring);
 		arrLaporanHilang[lenLaporanHilang + 1].Tanggal_Laporan := ParseDate(tanggallaporstring);
-		//Day := LaporanBukuHilang.Tanggal_Laporan.DD;
-		//Month := LaporanBukuHilang.Tanggal_Laporan.MM;
-		//Year := LaporanBukuHilang.Tanggal_Laporan.YYYY;
-		// belum dibutuhkan
-		
+
+		// Username pengguna diimpor dari program utama
 		arrLaporanHilang[lenLaporanHilang + 1].Username := UserIn.username;
 		
+		// Setiap penggguna melakukan laporan, panjang array bertambah 1
 		lenLaporanHilang := lenLaporanHilang + 1;
 		
 		writeln('Laporan Berhasil Diterima');
@@ -51,7 +56,3 @@ implementation
 		
 	end;
 end.
-
-
-
-

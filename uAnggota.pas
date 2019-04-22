@@ -4,6 +4,7 @@ interface
 	uses uFileLoader, uDate, parsertuanyon;
 
 	procedure CariAnggota(var arrUser : UArr);
+	
 
 implementation
 	
