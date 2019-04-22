@@ -26,7 +26,7 @@ var
 begin
 	// Pengguna menginput id buku yang bertype string yang kemudian disimpan
 	// di array History Peminjaman
-	write('Masukkan id buku yang ingin dikembalikan ');
+	write('Masukkan id buku yang ingin dikembalikan: ');
 	readln(idkembali);
 	arrHistoryPengembalian[lenhistorypengembalian + 1].ID_Buku := idkembali;
 	writeln('Data Peminjam: ');
@@ -60,7 +60,7 @@ begin
 	end;
 	
 	// Pengguna menginput tanggal bertipe string
-	writeln('Masukkan tanggal hari ini: ');
+	write('Masukkan tanggal hari ini: ');
 	readln(tanggalkembalistring);
 	
 	// untuk mengubah type tanggal yang berbentuk string menjadi type date 
