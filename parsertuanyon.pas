@@ -1,8 +1,8 @@
-//////////////////////////////////////////////////////////////
-//						ParserTuanYon              			//
-//////////////////////////////////////////////////////////////
-//Unit yang menangani parsing tipe data untuk unit-unit lain//
-/////////////////////////////////////////////////////////////
+//==============================================================//
+//                       ParserTuanYon                          //
+//--------------------------------------------------------------//
+//  Unit yang menangani parsing tipe data untuk unit-unit lain  //
+//==============================================================//
 unit parsertuanyon;
 
 interface
@@ -13,18 +13,20 @@ interface
 	function StrToBool (str : string) : boolean;
 	{Menghasilkan str dalam tipe boolean}
 
-	function IntToHex (int : integer) : string;
+	function IntToHex (number : Int64 ; digits : integer) : string;
 	{Menghasilkan int dalam bentuk hexadecimal bertipe string}
+	{Sumber Ide : https://www.geeksforgeeks.org/program-decimal-hexadecimal-conversion/}
+
 
 implementation
 	function StrToInt (str : string) : integer;
 	{Menghasilkan str dalam tipe integer}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		i, int : integer;
 
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 		int := 0;
 		for i := 1 to Length(str) do
@@ -37,7 +39,7 @@ implementation
 	function StrToBool (str : string) : boolean;
 	{Menghasilkan str dalam tipe boolean}
 
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 		if (str = 'TRUE') then
 		begin
@@ -47,33 +49,37 @@ implementation
 			StrToBool := false;
 		end;
 	end;
-
-	function IntToHex (int : integer) : string;
+	
+	function IntToHex (number : Int64; digits : integer) : string;
 	{Menghasilkan int dalam bentuk hexadecimal bertipe string}
 	{Sumber Ide : https://www.geeksforgeeks.org/program-decimal-hexadecimal-conversion/}
 
-	{KAMUS LOKAL}
-	var
-		remainder, number : integer;
+	{ KAMUS LOKAL }
+    var
+        remainder: Int64;
+        i, counter : integer;
 
-	{ALGORITMA}
-	begin
-		IntToHex := '';
-		number := int;
-		remainder := number mod 16;
+    { ALGORITMA }
+    begin
+        IntToHex := '';
+        counter := 0;
 
-		while (number <> 0) do
-		begin
-			remainder := number mod 16;
-			if (remainder < 10) then
-			begin
-				IntToHex := chr(remainder + 48) + IntToHex;
-			end else
-			begin
-				IntToHex := chr(remainder + 55) + IntToHex;
-			end;
-			writeln(IntToHex);
-			number := number div 16;
-		end;
-	end;
+        while (number <> 0) do
+        begin
+            remainder := number mod 16;
+            if (remainder < 10) then
+            begin
+                IntToHex := chr(remainder + 48) + IntToHex;
+            end else
+            begin
+                IntToHex := chr(remainder + 55) + IntToHex;
+            end;
+            counter := counter + 1;
+            number := number div 16;
+        end;
+        for i := 1 to (digits-counter) do
+        begin
+            IntToHex := '0' + IntToHex;
+        end;
+    end;
 end.

@@ -1,14 +1,24 @@
-unit PeminjamanBuku;
-// PeminjamanBuku
-// Unit yang menangani data peminjaman buku
+//====================================================================//
+//                              uPinjam                               //
+//--------------------------------------------------------------------//
+//   Unit yang menangani hal-hal yang berhubungan dengan peminjaman   //
+//====================================================================//
+unit uPinjam;
 
 interface
-	
-	
-uses uFileLoader, uDate;
+	uses uFileLoader, uDate;
 
-	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; var arrBuku : BArr ; UserIn : User); // tambah procedure agar bisa digunakan lebih mudah
+	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; var arrBuku : BArr ; UserIn : User);
 	{Mengisi data yang diinputkan oleh pengguna ke dalam arrHistoryPeminjaman}
+	{I.S. : arrHistoryPeminjaman sudah berisi data dari file riwayat peminjaman dan/atau modifikasi di main program}
+	{F.S. :	arrHistoryPeminjaman tercetak ke layar sesuai format data riwayat peminjaman}
+
+	procedure cek_riwayat(var arrPengembalian: KembaliArr; var arrBuku: BArr);
+	{ mencetak riwayat peminjaman input username dengan format 
+	  tanggal pengembalian | ID Buku | Judul Buku }
+
+	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
+	{Menulis elemen-elemen dari arrHistoryPeminjaman ke layar dengan format sesuai data riwayat peminjaman}
 	{I.S. : arrHistoryPeminjaman sudah berisi data dari file riwayat peminjaman dan/atau modifikasi di main program}
 	{F.S. :	arrHistoryPeminjaman tercetak ke layar sesuai format data riwayat peminjaman}
 
@@ -16,12 +26,17 @@ uses uFileLoader, uDate;
 implementation
 	
 	procedure PinjamBuku (var arrHistoryPeminjaman : PinjamArr ; var arrBuku : BArr ; UserIn : User);
+	{Mengisi data yang diinputkan oleh pengguna ke dalam arrHistoryPeminjaman}
+	{I.S. : arrHistoryPeminjaman sudah berisi data dari file riwayat peminjaman dan/atau modifikasi di main program}
+	{F.S. :	arrHistoryPeminjaman tercetak ke layar sesuai format data riwayat peminjaman}
 
+	{ KAMUS LOKAL }
 	var
 		found : boolean;
 		i, Tahun, Bulan, Hari : integer; 
 		tanggalpinjamstring, id : string; //  variabel tanggalpinjam untuk menyimpan tanggal peminjaman
 
+	{ ALGORITMA }
 	begin
 		write('Masukkan id buku yang ingin dipinjam : ');
 		readln(id); 
@@ -146,6 +161,106 @@ implementation
 		begin
 			writeln('Buku ', arrBuku[i].Judul_Buku, ' sedang habis!');
 			writeln('Coba lain kali');
+		end;
+	end;
+
+	procedure cek_riwayat(var arrPengembalian: KembaliArr; var arrBuku: BArr);
+	{ mencetak riwayat peminjaman input username dengan format 
+	  tanggal pengembalian | ID Buku | Judul Buku }
+
+	{ KAMUS LOKAL }
+	var
+		i, j, c, x: integer; { i indeks array pengembalian,
+							   j indeks array buku,
+							   c indeks counter untuk diset 0 semua,
+							   x indeks counter
+							 }
+		uname, judul_buku: string; { uname input username,
+									 judul buku variabel sementara untuk
+									 menampilkan judul buku dari array buku
+								   }
+		found : boolean;
+		counter : array[1..1000] of integer; { array untuk menampung indeks
+											   username untuk mencari judul buku }
+		tgl : Date; { variabel untuk menuliskan tanggal }
+	
+	{ ALGORITMA }
+	begin
+	
+	write('Masukkan username pengunjung : '); readln(uname);
+	writeln('Riwayat: ');
+	{ inisialisasi }
+	i := 0;
+	j := 1;
+	c := 0;
+	x := 1;
+	
+	for c:=1 to 1000 do { EOP : c=1000 }
+		begin
+		counter[c]:=0; { inisialisasi isi array 0 semua }
+		end;
+	
+	for i:=1 to lenHistoryPengembalian do { EOP : i = lenHistoryPengembalian }
+		begin
+		if (uname = arrPengembalian[i].Username) then { Proses kasus uname = username pada array pengembalian}
+			begin
+			counter[j] := i;
+			j := j+1;
+			end;
+		end;
+	
+	j:=0;	{ inisialisasi ulang untuk indeks j }
+	
+	while (counter[x]<>0) do { EOP : elemen array counter = 0 }
+		begin
+		found := false;		 { inisialisasi found = false }
+		while (not found) do { EOP : found = true }
+			begin
+			j:=j+1;
+			if (arrPengembalian[counter[x]].ID_Buku = arrBuku[j].ID_Buku) then { proses kasus ID buku pada array pengembalian = ID buku array buku }
+				begin
+				judul_buku := arrBuku[j].Judul_Buku;
+				found := true;
+				end;
+			end;
+		tgl := arrPengembalian[counter[x]].Tanggal_Pengembalian;
+		writeln(tgl.DD, '/', tgl.MM, '/', tgl.YYYY 	,' | ',arrPengembalian[counter[x]].ID_Buku,' | ',judul_buku);
+		x := x+1;
+		end;
+	end;
+
+	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
+	{Menulis elemen-elemen dari arrHistoryPeminjaman ke layar dengan format sesuai data riwayat peminjaman}
+	{I.S. : arrHistoryPeminjaman sudah berisi data dari file riwayat peminjaman dan/atau modifikasi di main program}
+	{F.S. :	arrHistoryPeminjaman tercetak ke layar sesuai format data riwayat peminjaman}
+	{' | ' digunakan untuk pemisah antar kolom}
+
+	{ KAMUS LOKAL }
+	var
+		k : integer;
+
+	{ ALGORITMA }
+	begin
+		for k := 1 to (lenHistoryPeminjaman) do
+		begin
+			write(k);
+			write(' | ');
+			write(arrHistoryPeminjaman[k].Username);
+			write(' | ');
+			write(arrHistoryPeminjaman[k].ID_Buku);
+			write(' | ');
+			WriteDate(arrHistoryPeminjaman[k].Tanggal_Peminjaman);
+			write(' | ');
+			WriteDate(arrHistoryPeminjaman[k].Tanggal_Batas_Pengembalian);
+			write(' | ');
+			if (arrHistoryPeminjaman[k].Status_Pengembalian) then
+			begin
+				write('Sudah Kembali');
+			end else
+			begin
+				write('Belum Kembali');
+			end;
+			writeln();
 		end;
 	end;
 end.

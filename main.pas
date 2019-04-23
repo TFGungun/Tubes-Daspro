@@ -1,10 +1,16 @@
+//==============================================//
+//                                              //
+//                MAIN PROGRAM                  //
+//                                              //
+//----------------------------------------------//
+//                                              //
+//      Main Program Simulasi Perpustakaan      //
+//                                              //
+//==============================================// 
 Program main;
 
 uses
-	uFileLoader, uDate,
-	cari, caritahunterbit, login, registrasi, riwayat_peminjaman, statistik,
-	tambah_buku, tambah_jumlah_buku, uHilang, uAnggota, parsertuanyon, uFileSaver,
-	PeminjamanBuku, PengembalianBuku, lapor_hilang;
+	uFileLoader,uFileSaver, uDate, uBuku, uAnggota, uPinjam, uKembali, uHilang, parsertuanyon;
 
 var
 	arrBuku : array[1..1000] of Buku;
@@ -22,29 +28,26 @@ begin
 	write('Masukkan nama File Buku: ');
 	readln(filename);
 	LoadBuku(arrBuku, filename);
-	writeln('');
-
 
 	write('Masukkan nama File User: ');
 	readln(filename);
 	LoadUser(arrUser, filename);
-	writeln('');
 
 
 	write('Masukkan nama File Peminjaman: ');
 	readln(filename);
 	LoadHistoryPeminjaman(arrHistoryPeminjaman, filename);
-	writeln('');
 
 	write('Masukkan nama File Pengembalian: ');
 	readln(filename);
 	LoadHistoryPengembalian(arrHistoryPengembalian, filename);
-	writeln('');
 
-	write('Masukkan nama File Buku hilang: ');
+	write('Masukkan nama File Buku Hilang: ');
 	readln(filename);
 	LoadLaporanHilang(arrLaporanHilang, filename);
+
 	writeln('');
+	writeln('File perpustakaan berhasil dimuat!');
 
 end;
 

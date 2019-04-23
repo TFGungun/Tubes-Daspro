@@ -1,13 +1,12 @@
-////////////////////////////////////////////////
-//			       uFileSaver                 //
-////////////////////////////////////////////////
-//Unit yang menangani penyimpanan kembali data//
-////////////////////////////////////////////////
+//================================================//
+//                   uFileSaver                   //
+//------------------------------------------------//
+//  Unit yang menangani penyimpanan kembali data  //
+//================================================//
 unit uFileSaver;
 
 interface
-
-	Uses uFileLoader;
+	uses uFileLoader;
 
 	procedure SaveBuku(var arrBuku : BArr ; filename : string);
 	{Mengisi ulang file filename dengan elemen-elemen dari arrBuku
@@ -47,13 +46,13 @@ implementation
 	{I.S. : file filename berisi elemen arrBuku pada awal program}
 	{F.S. : file filename berisi elemen arrBuku paling baru pada saat save}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i : integer;
 		header : string;
 
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -80,13 +79,13 @@ implementation
 	{I.S. : file filename berisi elemen arrUser pada awal program}
 	{F.S. : file filename berisi elemen arrUser paling baru pada saat save}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i : integer;
 		header, alamat : string;
 
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -115,13 +114,13 @@ implementation
 	{I.S. : file filename berisi elemen arrHistoryPeminjaman pada awal program}
 	{F.S. : file filename berisi elemen arrHistoryPeminjaman paling baru pada saat save}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i : integer;
 		header: string;
 
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -153,13 +152,13 @@ implementation
 	{I.S. : file filename berisi elemen arrHistoryPengembalian pada awal program}
 	{F.S. : file filename berisi elemen arrHistoryPengembalian paling baru pada saat save}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i : integer;
 		header: string;
 
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -187,13 +186,13 @@ implementation
 	{I.S. : file filename berisi elemen arrLaporanHilang pada awal program}
 	{F.S. : file filename berisi elemen arrLaporanHilang paling baru pada saat save}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i : integer;
 		header: string;
 
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}

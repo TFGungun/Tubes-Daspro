@@ -1,13 +1,12 @@
-//////////////////////////////////////////////
-//					uDate                   //
-//////////////////////////////////////////////
-//Unit yang menangani tanggal dalam program	//
-//////////////////////////////////////////////
+//=============================================//
+//				  	  uDate                    //
+//---------------------------------------------//
+//  Unit yang menangani tanggal dalam program  //
+//=============================================//
 unit uDate;
 
 interface
-	uses
-		parsertuanyon;
+	uses parsertuanyon;
 
 	{* KAMUS *}
 	
@@ -43,12 +42,12 @@ implementation
 	function ParseDate(var datestring : string) : Date;
 	{Menghasilkan tanggal bertipe Date dari string tanggal berformat DD/MM/YYYY}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		i, slashcount : integer;
 		temp_string : string;
 
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 		i := 1;
 		slashcount := 0;	// Penanda banyak garis miring yang telah ditemukan
@@ -101,7 +100,7 @@ implementation
 	{I.S. : Atribut Date hanya terdiri dari 1 digit}
 	{F.S. :	Atribut Date tercetak ke layar dalam format 2 digit tanpa akhiran End of Line}
 	
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 		if((dateComponent/10) < 1) then
 		begin
@@ -117,7 +116,7 @@ implementation
 	{I.S. : Atribut Date lengkap}
 	{F.S. :	Date tercetak ke layar sesuai format DD/MM/YYYY tanpa akhiran End of Line}
 	
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 		ProcessDate(dateofdate.DD);
 		write('/');
@@ -131,7 +130,7 @@ implementation
 	{I.S. : Atribut Date lengkap}
 	{F.S. :	Date tercetak ke layar sesuai format DD/MM/YYYY dengan akhiran End of Line}
 	
-	{ALGORITMA}
+	{ ALGORITMA }
 	begin
 		ProcessDate(dateofdate.DD);
 		write('/');

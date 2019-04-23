@@ -1,14 +1,13 @@
-////////////////////////////////////////////////////
-//					uFileLoader                   //
-////////////////////////////////////////////////////
-//Unit yang menangani loading data ke main program//
-////////////////////////////////////////////////////
+//====================================================//
+//                    uFileLoader                     //
+//----------------------------------------------------//
+//  Unit yang menangani loading data ke main program  //
+//====================================================//
 
 unit uFileLoader;
 
 interface
-
-	Uses uDate, parsertuanyon;
+	uses uDate, parsertuanyon;
 
 	{* KAMUS *}
 	
@@ -96,30 +95,14 @@ interface
 
 	{*** KELOMPOK Interaksi dengan I/O device, BACA / TULIS ***}
 
-	procedure PrintBuku (var arrBuku : BArr);
-	{Menulis elemen-elemen dari arrBuku ke layar dengan format sesuai data buku}
-	{I.S. : arrBuku sudah berisi data dari file buku dan/atau modifikasi di main program}
-	{F.S. :	arrBuku tercetak ke layar sesuai format data buku}
+	procedure countPengguna(arrUser: UArr);
+	{ menghitung dan mencetak jumlah anggota; admin dan pengunjung }
 
-	procedure PrintUser (var arrUser : UArr);
-	{Menulis elemen-elemen dari arrUser ke layar dengan format sesuai data user}
-	{I.S. : arrUser sudah berisi data dari file user dan/atau modifikasi di main program}
-	{F.S. :	arrUser tercetak ke layar sesuai format data user}
+	procedure countBuku(arrBuku: BArr);
+	{ menghitung dan mencetak jumlah buku berdasarkan kategori }
 
-	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
-	{Menulis elemen-elemen dari arrHistoryPeminjaman ke layar dengan format sesuai data riwayat peminjaman}
-	{I.S. : arrHistoryPeminjaman sudah berisi data dari file riwayat peminjaman dan/atau modifikasi di main program}
-	{F.S. :	arrHistoryPeminjaman tercetak ke layar sesuai format data riwayat peminjaman}
-
-	procedure PrintHistoryPengembalian (var arrHistoryPengembalian : KembaliArr);
-	{Menulis elemen-elemen dari arrHistoryPengembalian ke layar dengan format sesuai data riwayat pengembalian}
-	{I.S. : arrHistoryPengembalian sudah berisi data dari file riwayat pengembalian dan/atau modifikasi di main program}
-	{F.S. :	arrHistoryPengembalian tercetak ke layar sesuai format data riwayat pengembalian}
-
-	procedure PrintLaporanHilang (var arrLaporanHilang : HilangArr);
-	{Menulis elemen-elemen dari arrLaporanHilang ke layar dengan format sesuai data laporan hilang}
-	{I.S. : arrLaporanHilang sudah berisi data dari file laporan hilang dan/atau modifikasi di main program}
-	{F.S. :	arrLaporanHilang tercetak ke layar sesuai format data laporan hilang}
+	procedure list_statistik (var arrBuku: BArr; var arrUser: UArr);
+	{ memanggil prosedur countPengguna dan countBuku }
 
 	{KAMUS GLOBAL}
 	var
@@ -131,20 +114,19 @@ interface
 
 implementation
 	
-	
-
 	procedure LoadBuku (var arrBuku: BArr; filename : string);
 	{Mengisi masukan arrBuku yang kosong dengan elemen-elemen bertipe Buku 
 	dari file data buku dengan nama filename}
 	{I.S. : arrBuku kosong}
 	{F.S. : arrBuku berisi elemen bertipe Buku dari data buku bernama filename}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i, j, comcount, linecount : integer; 
 		temp_string,readstring : string;
 
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -235,36 +217,7 @@ implementation
 
 		Close(UserFile);
 
-		
-
 		lenBuku := (linecount-1);
-	end;
-
-	procedure PrintBuku (var arrBuku : BArr);
-	{Menulis elemen-elemen dari arrBuku ke layar dengan format sesuai data buku}
-	{I.S. : arrBuku sudah berisi data dari file buku dan/atau modifikasi di main program}
-	{F.S. :	arrBuku tercetak ke layar sesuai format data buku}
-	{' | ' digunakan untuk pemisah antar kolom}
-	var
-		k : integer;
-	begin
-		for k := 1 to (lenBuku) do
-		begin
-			write(k);
-			write(' | ');
-			write(arrBuku[k].ID_Buku);
-			write(' | ');
-			write(arrBuku[k].Judul_Buku);
-			write(' | ');
-			write(arrBuku[k].Author);
-			write(' | ');
-			write(arrBuku[k].Jumlah_Buku);
-			write(' | ');
-			write(arrBuku[k].Tahun_Penerbit);
-			write(' | ');
-			write(arrBuku[k].Kategori);
-			writeln();
-		end;
 	end;
 
 	procedure LoadUser (var arrUser: UArr; filename : string);
@@ -273,12 +226,13 @@ implementation
 	{I.S. : arrUser kosong}
 	{F.S. : arrUser berisi elemen bertipe User dari data user bernama filename}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i, j, comcount, linecount : integer;
 		readstring : string;
 
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -373,44 +327,19 @@ implementation
 		lenUser := (linecount-1); // Inisialisasi variabel panjang array
 	end;
 
-	procedure PrintUser (var arrUser : UArr);
-	{Menulis elemen-elemen dari arrUser ke layar dengan format sesuai data user}
-	{I.S. : arrUser sudah berisi data dari file user dan/atau modifikasi di main program}
-	{F.S. :	arrUser tercetak ke layar sesuai format data user}
-	{' | ' digunakan untuk pemisah antar kolom}
-	var
-		k : integer;
-	begin
-		writeln(lenUser);
-		for k := 1 to (lenUser) do
-		begin
-			write(k);
-			write(' | ');
-			write(arrUser[k].Nama);
-			write(' | ');
-			write(arrUser[k].Alamat);
-			write(' | ');
-			write(arrUser[k].Username);
-			write(' | ');
-			write(arrUser[k].Password);
-			write(' | ');
-			write(arrUser[k].Role);
-			writeln();
-		end;
-	end;
-
 	procedure LoadHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr ; filename : string);
 	{Mengisi masukan arrHistoryPeminajman yang kosong dengan elemen-elemen bertipe HistoryPeminjaman 
 	dari file data riwayat peminjaman dengan nama filename}
 	{I.S. : arrHistoryPeminjaman kosong}
 	{F.S. : arrHistoryPeminjaman berisi elemen bertipe HistoryPeminjaman dari data riwayat peminjaman bernama filename}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i, j, comcount, linecount : integer;
 		temp_string,readstring : string;
 
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -514,49 +443,19 @@ implementation
 		lenHistoryPeminjaman := (linecount-1); // Inisialisasi variabel panjang array
 	end;
 
-	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);
-	{Menulis elemen-elemen dari arrHistoryPeminjaman ke layar dengan format sesuai data riwayat peminjaman}
-	{I.S. : arrHistoryPeminjaman sudah berisi data dari file riwayat peminjaman dan/atau modifikasi di main program}
-	{F.S. :	arrHistoryPeminjaman tercetak ke layar sesuai format data riwayat peminjaman}
-	{' | ' digunakan untuk pemisah antar kolom}
-	var
-		k : integer;
-	begin
-		for k := 1 to (lenHistoryPeminjaman) do
-		begin
-			write(k);
-			write(' | ');
-			write(arrHistoryPeminjaman[k].Username);
-			write(' | ');
-			write(arrHistoryPeminjaman[k].ID_Buku);
-			write(' | ');
-			WriteDate(arrHistoryPeminjaman[k].Tanggal_Peminjaman);
-			write(' | ');
-			WriteDate(arrHistoryPeminjaman[k].Tanggal_Batas_Pengembalian);
-			write(' | ');
-			if (arrHistoryPeminjaman[k].Status_Pengembalian) then
-			begin
-				write('Sudah Kembali');
-			end else
-			begin
-				write('Belum Kembali');
-			end;
-			writeln();
-		end;
-	end;
-
 	procedure LoadHistoryPengembalian (var arrHistoryPengembalian : KembaliArr; filename : string);
 	{Mengisi masukan arrHistoryPengembalian yang kosong dengan elemen-elemen bertipe HistoryPengembalian 
 	dari file data riwayat pengembalian dengan nama filename}
 	{I.S. : arrHistoryPengembalian kosong}
 	{F.S. : arrHistoryPengembalian berisi elemen bertipe HistoryPengembalian dari data riwayat pengembalian bernama filename}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i, j, comcount, linecount : integer;
 		temp_string,readstring : string;
 
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -640,39 +539,19 @@ implementation
 		lenHistoryPengembalian := (linecount-1); // Inisialisasi variabel panjang array
 	end;
 
-	procedure PrintHistoryPengembalian (var arrHistoryPengembalian : KembaliArr);
-	{Menulis elemen-elemen dari arrHistoryPengembalian ke layar dengan format sesuai data riwayat pengembalian}
-	{I.S. : arrHistoryPengembalian sudah berisi data dari file riwayat pengembalian dan/atau modifikasi di main program}
-	{F.S. :	arrHistoryPengembalian tercetak ke layar sesuai format data riwayat pengembalian}
-	{' | ' digunakan untuk pemisah antar kolom}
-	var
-		k : integer;
-	begin
-		for k := 1 to (lenHistoryPengembalian) do
-		begin
-			write(k);
-			write(' | ');
-			write(arrHistoryPengembalian[k].Username);
-			write(' | ');
-			write(arrHistoryPengembalian[k].ID_Buku);
-			write(' | ');
-			WriteDate(arrHistoryPengembalian[k].Tanggal_Pengembalian);
-			writeln();
-		end;
-	end;
-
 	procedure LoadLaporanHilang(var arrLaporanHilang : HilangArr; filename : string);
 	{Mengisi masukan arrLaporanHilang yang kosong dengan elemen-elemen bertipe LaporanHilang 
 	dari file data laporan hilang dengan nama filename}
 	{I.S. : arrLaporanHilang kosong}
 	{F.S. : arrLaporanHilang berisi elemen bertipe LaporanHilang dari data laporan hilang bernama filename}
 
-	{KAMUS LOKAL}
+	{ KAMUS LOKAL }
 	var
 		UserFile : Text;
 		i, j, comcount, linecount : integer;
 		temp_string,readstring : string;
 
+	{ ALGORITMA }
 	begin
 
 		{INISIALISASI FILE UNTUK DIBACA}
@@ -756,25 +635,101 @@ implementation
 		lenLaporanHilang := (linecount-1); // Inisialisasi variabel panjang array
 	end;
 
-	procedure PrintLaporanHilang(var arrLaporanHilang : HilangArr);
-	{Menulis elemen-elemen dari arrLaporanHilang ke layar dengan format sesuai data laporan hilang}
-	{I.S. : arrLaporanHilang sudah berisi data dari file laporan hilang dan/atau modifikasi di main program}
-	{F.S. :	arrLaporanHilang tercetak ke layar sesuai format data laporan hilang}
-	{' | ' digunakan untuk pemisah antar kolom}
+	procedure countPengguna(arrUser: UArr);
+	{ menghitung dan mencetak jumlah anggota; admin dan pengunjung }
+
+	{ KAMUS }
 	var
-		k : integer;
+		a, p, i: Integer; { a untuk menghitung jumlah admin, p untuk pengurus, i sebagai indeks array user}
+
+	{ ALGORITMA }
 	begin
-		for k := 1 to (lenLaporanHilang) do
+		a := 0;					{ inisialisasi }
+		p := 0;
+		for i:= 1 to lenUser do { EOP : i = banyak data user }
+			begin
+				if(arrUser[i].Role = 'Admin') then { proses kasus role user = Admin }
+					begin
+						a:=a+1;
+					end
+				else { arrUser[i].Role = 'Pengunjung'; proses kasus role user = Pengunjung }
+					begin
+						p:=p+1;
+					end;
+			end;
+		writeln('Admin | ', a);
+		writeln('Pengunjung | ', p);
+		writeln('Total | ', a+p);
+	end;
+
+	procedure countBuku(arrBuku: BArr);
+	{ menghitung dan mencetak jumlah buku berdasarkan kategori }
+	
+	{ KAMUS }
+	var
+	i, sastra, sains, sejarah, manga, programming : integer;
+	{ i indeks array buku, sastra menghitung jumlah buku kategori sastra,
+	  sains menghitung jumlah buku kategori sains,
+	  sejarah menghitung jumlah buku kategori sejarah,
+	  manga menghitung jumlah buku kategori manga,
+	  programming menghitung jumlah buku kategori programming
+	}
+	
+	{ ALGORITMA }
+	begin
+
+	{ inisialisasi }
+	sastra := 0;
+	sains := 0;
+	sejarah := 0;
+	manga := 0;
+	programming := 0;
+	
+	for i:=1 to lenBuku do { EOP : i = banyak data buku}
 		begin
-			write(k);
-			write(' | ');
-			write(arrLaporanHilang[k].Username);
-			write(' | ');
-			write(arrLaporanHilang[k].ID_Buku_Hilang);
-			write(' | ');
-			WriteDate(arrLaporanHilang[k].Tanggal_Laporan);
-			writeln();
+		if (arrBuku[i].Kategori = 'sastra') then { proses kasus kategori pada array = sastra }
+			begin
+			sastra := sastra + 1;
+			end
+		
+		else if (arrBuku[i].Kategori = 'sains') then { proses kasus kategori pada array = sains }
+			begin
+			sains := sains + 1;
+			end
+		
+		else if (arrBuku[i].Kategori = 'sejarah') then { proses kasus kategori pada array = sejarah }
+			begin
+			sejarah := sejarah + 1;
+			end
+	
+		else if (arrBuku[i].Kategori = 'manga') then { proses kasus kategori pada array = manga }
+			begin
+			manga := manga + 1;
+			end
+	
+		else if (arrBuku[i].Kategori = 'programming') then { proses kasus kategori pada array = programming }
+			begin
+			programming := programming + 1;
+			end;
 		end;
+
+	writeln('sastra | ',sastra);
+	writeln('sains | ',sains);
+	writeln('sejarah | ',sejarah);
+	writeln('manga | ',manga);
+	writeln('programming | ',programming);
+	writeln('Total | ', sastra+sains+sejarah+manga+programming);
+	end;
+
+	procedure list_statistik( var arrBuku: BArr; var arrUser: UArr);
+	{ memanggil prosedur countPengguna dan countBuku }
+
+	{ ALGORITMA }
+	begin
+		writeln('Pengguna: ');
+		countPengguna(arrUser);
+		writeln('Buku:');
+		countBuku(arrBuku);
 	end;
 
 end. 
