@@ -10,7 +10,6 @@ var
 	arrHistoryPeminjaman : array[1..1000] of HistoryPeminjaman;
 	arrHistoryPengembalian : array[1..1000] of HistoryPengembalian;
 	arrLaporanHilang : array[1..1000] of LaporanHilang;
-	k : integer;
 	x, filename : string;
 	userIn : User;
 	isProgramRunning : boolean;
@@ -173,7 +172,7 @@ begin
 	writeln('$ logout : keluar');
 	writeln('$ exit : keluar program');
 	writeln('---------------------------------------------------------');
-	writeln('> '); 
+	write('> '); 
 	readln(x);
 	ClrScr;
 	writeln('> ',x);

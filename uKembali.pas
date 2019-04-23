@@ -218,6 +218,10 @@ implementation
 		begin
 			denda(TahunKembali, BulanKembali, HariKembali, TahunBatasKembali, BulanBatasKembali, HariBatasKembali);
 		end;
+	writeln();
+	writeln('Ketik 0 untuk kembali ke menu.');
+	readln();
+	ClrScr;
 	end;
 
 	procedure PrintHistoryPengembalian (var arrHistoryPengembalian : KembaliArr);

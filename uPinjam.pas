@@ -166,6 +166,10 @@ implementation
 				writeln('Coba lain kali');
 			end;
 		end;
+	writeln();
+	writeln('Ketik 0 untuk kembali ke menu.');
+	readln();
+	ClrScr;
 	end;
 
 	procedure cek_riwayat(var arrHistoryPeminjaman: PinjamArr; var arrBuku: BArr);
@@ -232,6 +236,10 @@ implementation
 		writeln(tgl.DD, '/', tgl.MM, '/', tgl.YYYY 	,' | ',arrHistoryPeminjaman[counter[x]].ID_Buku,' | ',judul_buku);
 		x := x+1;
 		end;
+	writeln();
+	writeln('Ketik 0 untuk kembali ke menu.');
+	readln();
+	ClrScr;
 	end;
 
 	procedure PrintHistoryPeminjaman (var arrHistoryPeminjaman : PinjamArr);

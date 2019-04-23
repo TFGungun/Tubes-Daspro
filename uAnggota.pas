@@ -83,50 +83,53 @@ implementation
         ClrScr;
     end;
 
-//======================================
-
-function leftrotate(x, c: Cardinal): Cardinal;
+    function leftrotate(x, c: Cardinal): Cardinal;
     begin
-        leftrotate := (x shl c) or (x shr (32-c));
+    leftrotate := (x shl c) or (x shr (32-c));
     end;
 
-//======================================
+    function hashpw(password: string): string;
+    //Fungsi untuk menjalankan hash pada password
+    {Sumber Ide : https://en.wikipedia.org/wiki/MD5#Algorithm
+                  https://tr.opensuse.org/MD5
+                  https://rosettacode.org/wiki/MD5/Implementation
+                  https://stackoverflow.com/questions/27360260/md5-in-delphi-pascal-freepascal-for-short-strings}
 
-function hashpw(password: string): string;
-    //Kamus Lokal
+    {KAMUS LOKAL}
     const 
-    //konstanta berikut digunakan untuk membuat peubah pada fungsi hash
-    s: array[0..63] of Cardinal = (
-        7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
-        5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,
-        4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,
-        6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21 );
+        //konstanta berikut digunakan untuk membuat peubah pada fungsi hash
+        s : array[0..63] of Cardinal = (
+            7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
+            5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,
+            4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,
+            6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21 );
 
-    K: array[0..63] of Cardinal = (
-        $d76aa478, $e8c7b756, $242070db, $c1bdceee,
-        $f57c0faf, $4787c62a, $a8304613, $fd469501,
-        $698098d8, $8b44f7af, $ffff5bb1, $895cd7be,
-        $6b901122, $fd987193, $a679438e, $49b40821,
-        $f61e2562, $c040b340, $265e5a51, $e9b6c7aa,
-        $d62f105d, $02441453, $d8a1e681, $e7d3fbc8,
-        $21e1cde6, $c33707d6, $f4d50d87, $455a14ed,
-        $a9e3e905, $fcefa3f8, $676f02d9, $8d2a4c8a,
-        $fffa3942, $8771f681, $6d9d6122, $fde5380c,
-        $a4beea44, $4bdecfa9, $f6bb4b60, $bebfbc70,
-        $289b7ec6, $eaa127fa, $d4ef3085, $04881d05,
-        $d9d4d039, $e6db99e5, $1fa27cf8, $c4ac5665,
-        $f4292244, $432aff97, $ab9423a7, $fc93a039,
-        $655b59c3, $8f0ccc92, $ffeff47d, $85845dd1,
-        $6fa87e4f, $fe2ce6e0, $a3014314, $4e0811a1,
-        $f7537e82, $bd3af235, $2ad7d2bb, $eb86d391 );
+        K : array[0..63] of Cardinal = (
+            $d76aa478, $e8c7b756, $242070db, $c1bdceee,
+            $f57c0faf, $4787c62a, $a8304613, $fd469501,
+            $698098d8, $8b44f7af, $ffff5bb1, $895cd7be,
+            $6b901122, $fd987193, $a679438e, $49b40821,
+            $f61e2562, $c040b340, $265e5a51, $e9b6c7aa,
+            $d62f105d, $02441453, $d8a1e681, $e7d3fbc8,
+            $21e1cde6, $c33707d6, $f4d50d87, $455a14ed,
+            $a9e3e905, $fcefa3f8, $676f02d9, $8d2a4c8a,
+            $fffa3942, $8771f681, $6d9d6122, $fde5380c,
+            $a4beea44, $4bdecfa9, $f6bb4b60, $bebfbc70,
+            $289b7ec6, $eaa127fa, $d4ef3085, $04881d05,
+            $d9d4d039, $e6db99e5, $1fa27cf8, $c4ac5665,
+            $f4292244, $432aff97, $ab9423a7, $fc93a039,
+            $655b59c3, $8f0ccc92, $ffeff47d, $85845dd1,
+            $6fa87e4f, $fe2ce6e0, $a3014314, $4e0811a1,
+            $f7537e82, $bd3af235, $2ad7d2bb, $eb86d391 );
 
-    var a0,b0,c0,d0, a,b,c,d, f,g,dTemp: Cardinal;
-    Len: Integer;
-    Arrpw : array[0..63] of Char;
-    M: array[0..15] of Cardinal absolute Arrpw; //memecah Arrpw menjadi 16 potongan data ordinal untuk diolah
-    i: Integer;
+    var 
+        a0, b0, c0, d0, a, b, c, d, f, g, dTemp : Cardinal;
+        Len : Integer;
+        Arrpw : array[0..63] of Char;
+        M : array[0..15] of Cardinal absolute Arrpw; //memecah Arrpw menjadi 16 potongan data ordinal untuk diolah
+        i : Integer;
     
-    //Algorithm
+    {ALGORITMA}
     begin
         //set variable initiator
         a0 := $67452301;
@@ -140,7 +143,7 @@ function hashpw(password: string): string;
         //masukkan string password ke dalam array msg
         FillChar(Arrpw, 64, 0);
 
-        for i:=1 to Len do Arrpw[i-1] := password[i];
+        for i := 1 to Len do Arrpw[i-1] := password[i];
 
             //tambahkan 1 bit ke Arrpw
             Arrpw[Len] := chr(128);
@@ -160,21 +163,22 @@ function hashpw(password: string): string;
         //dalam setiap character password dibuat suatu fungsi yang mengakses array K, M, dan s
         //tujuannya untuk membuat tiap character pada password akan membuat perubahan pada variable initiator
         //dibuat 4 fungsi berbeda sehingga proses hashing dapat lebih rumit
-            if (i>=0) and (i<=15) then begin
+            if (i >= 0) and (i <= 15) then 
+            begin
                 F := (B and C) or ((not B) and D);
                 g := i;
-            end
-            else if (i>=16) and (i<=31) then begin
+            end else if (i >= 16) and (i <= 31) then 
+            begin
                 F := (D and B) or ((not D) and C);
-                g := (5*i + 1) mod 16;
-            end
-            else if (i>=32) and (i<=47) then begin
+                g := (5 * i + 1) mod 16;
+            end else if (i >= 32) and (i <= 47) then 
+            begin
                 F := B xor C xor D;
-                g := (3*i + 5) mod 16;
-            end
-            else if (i>=48) and (i<=63) then begin
+                g := (3 * i + 5) mod 16;
+            end else if (i >= 48) and (i <= 63) then 
+            begin
                 F := C xor (B or (not D));
-                g := (7*i) mod 16;
+                g := (7 * i) mod 16;
             end;
         
         //Setiap character tadi akan merubah nilai B pada fungsi berikut
@@ -193,7 +197,7 @@ function hashpw(password: string): string;
         d0 := d0 + D;
         
         //hex password    
-        hashpw := ( IntToHex(a0,8) + IntToHex(b0,8) + IntToHex(c0,8)  +IntToHex(d0,8) );
+        hashpw := (IntToHex(a0,8) + IntToHex(b0,8) + IntToHex(c0,8)  +IntToHex(d0,8));
     end;
 
 //======================================

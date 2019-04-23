@@ -87,6 +87,7 @@ implementation
 				inc(i);
 			end;
 		end;
+
 	end;
 
 	procedure LaporKehilangan(var arrlaporanHilang : HilangArr ; arrBuku : BArr; UserIn : User);
@@ -135,6 +136,10 @@ implementation
 		
 		writeln('Laporan Berhasil Diterima');
 		
+		writeln();
+		writeln('Ketik 0 untuk kembali ke menu.');
+		readln();
+		ClrScr;
 		
 	end;
 
