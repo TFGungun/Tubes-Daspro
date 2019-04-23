@@ -7,7 +7,7 @@
 unit uFileLoader;
 
 interface
-	uses uDate, parsertuanyon;
+	uses uDate, parsertuanyon, Crt;
 
 	{* KAMUS *}
 	
@@ -730,6 +730,10 @@ implementation
 		countPengguna(arrUser);
 		writeln('Buku:');
 		countBuku(arrBuku);
+		writeln();
+		writeln('Ketik 0 untuk kembali ke menu.');
+		readln();
+		ClrScr;
 	end;
 
 end. 

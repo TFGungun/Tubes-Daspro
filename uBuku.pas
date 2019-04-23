@@ -6,7 +6,7 @@
 unit uBuku;
 
 interface
-	uses uFileLoader;
+	uses uFileLoader, Crt;
 
 type
 	indexarr = array[1..1000] of integer;
@@ -105,6 +105,11 @@ implementation
 			index := indexarray[i];
 			writeln(temparr[index].ID_Buku, ' | ', temparr[index].Judul_Buku, ' | ', temparr[index].Author);
 		end;
+
+		writeln();
+		writeln('Ketik 0 untuk kembali ke menu.');
+		readln();
+		ClrScr;
 	end;
 
 	function isMember(index : integer ; indexarray : indexarr; count : integer) : boolean;
@@ -282,7 +287,10 @@ implementation
 			begin
 				writeln('Tidak ada buku yang sesuai.');
 			end;
-			
+		writeln();
+		writeln('Ketik 0 untuk kembali ke menu.');
+		readln();
+		ClrScr;	
 	end;
 
 	procedure add(var arrBuku: BArr);
@@ -295,7 +303,6 @@ implementation
 	begin
 		writeln('Masukkan Informasi buku yang ditambahkan: ');
 		write('Masukkan id buku: ');
-		lenBuku := lenBuku + 1; { panjang data bertambah 1 }
 		readln(arrBuku[lenBuku+1].ID_Buku); {memasukkan ID Buku baru dengan indeks jumlah data bertambah 1}
 		write('Masukkan judul buku: ');
 		readln(arrBuku[lenBuku+1].Judul_Buku); {memasukkan Judul Buku baru dengan indeks jumlah data bertambah 1}
@@ -310,6 +317,10 @@ implementation
 		writeln();
 		writeln('Buku berhasil ditambahkan ke dalam sistem!');
 		lenBuku := lenBuku + 1; { panjang data bertambah 1 }
+		writeln();
+		writeln('Ketik 0 untuk kembali ke menu.');
+		readln();
+		ClrScr;
 	end;
 
 	procedure amount(var arrBuku: BArr);
@@ -343,6 +354,10 @@ implementation
 			end; 					{ i akhir adalah indeks buku yang memiliki id input }
 		arrBuku[i].Jumlah_buku := arrBuku[i].Jumlah_Buku + n;	{ jumlah buku menjadi jumlah buku awal ditambah input }
 		writeln('Pembaharuan jumlah buku berhasil dilakukan, total buku ', arrBuku[i].Judul_Buku, ' di perpustakaan menjadi ', arrBuku[i].Jumlah_Buku);
+		writeln();
+		writeln('Ketik 0 untuk kembali ke menu.');
+		readln();
+		ClrScr;
 	end;
 
 	procedure PrintBuku (var arrBuku : BArr);

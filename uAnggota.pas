@@ -6,77 +6,82 @@
 unit uAnggota;
 
 interface
-	uses uFileLoader, uDate, parsertuanyon;
+    uses uFileLoader, uDate, parsertuanyon, Crt;
 
-	procedure CariAnggota(var arrUser : UArr);
-	{Mencari anggota dengan username tertentu dan mencetak datanya ke layar}
-	{I.S. : arrUser sudah berisi, username didapat dari input}
-	{F.S. : Data user tercetak ke layar, jika username tidak ditemukan akan
-			dicetak pesan kesalahan}
+    procedure CariAnggota(var arrUser : UArr);
+    {Mencari anggota dengan username tertentu dan mencetak datanya ke layar}
+    {I.S. : arrUser sudah berisi, username didapat dari input}
+    {F.S. : Data user tercetak ke layar, jika username tidak ditemukan akan
+            dicetak pesan kesalahan}
 
-	function leftrotate(x : Cardinal ; c : Cardinal) : Cardinal;
-	//Fungsi untuk menghasilkan suatu nilai dari hasil shl atau shr 2 nilai
+    function leftrotate(x : Cardinal ; c : Cardinal) : Cardinal;
+    //Fungsi untuk menghasilkan suatu nilai dari hasil shl atau shr 2 nilai
 
-	function hashpw(password : string) : string;
-	//Fungsi untuk menjalankan hash pada password
-	{Sumber Ide : https://en.wikipedia.org/wiki/MD5#Algorithm
-				  https://tr.opensuse.org/MD5
-				  https://rosettacode.org/wiki/MD5/Implementation
-				  https://stackoverflow.com/questions/27360260/md5-in-delphi-pascal-freepascal-for-short-strings}
+    function hashpw(password : string) : string;
+    //Fungsi untuk menjalankan hash pada password
+    {Sumber Ide : https://en.wikipedia.org/wiki/MD5#Algorithm
+                  https://tr.opensuse.org/MD5
+                  https://rosettacode.org/wiki/MD5/Implementation
+                  https://stackoverflow.com/questions/27360260/md5-in-delphi-pascal-freepascal-for-short-strings}
 
-	procedure log_in(var arrUser: UArr; var UserIn : User);
-	//Procedure untuk melakukan login
+    procedure log_in(var arrUser: UArr; var UserIn : User);
+    //Procedure untuk melakukan login
 
-	procedure regis(var arrUser: UArr);
-	//procedure untuk menerima input user baru. Procedure akan meminta user untuk memasukkan nama, alamat, username, dan password.
+    procedure regis(var arrUser: UArr);
+    //procedure untuk menerima input user baru. Procedure akan meminta user untuk memasukkan nama, alamat, username, dan password.
 
-	procedure PrintUser (var arrUser : UArr);
-	{Menulis elemen-elemen dari arrUser ke layar dengan format sesuai data user}
-	{I.S. : arrUser sudah berisi data dari file user dan/atau modifikasi di main program}
-	{F.S. :	arrUser tercetak ke layar sesuai format data user}
+
+    procedure PrintUser (var arrUser : UArr);
+    {Menulis elemen-elemen dari arrUser ke layar dengan format sesuai data user}
+    {I.S. : arrUser sudah berisi data dari file user dan/atau modifikasi di main program}
+    {F.S. : arrUser tercetak ke layar sesuai format data user}
 
 implementation
-	
-	procedure CariAnggota(var arrUser : UArr);
-	{Mencari anggota dengan username tertentu dan mencetak datanya ke layar}
-	{I.S. : arrUser sudah berisi, username didapat dari input}
-	{F.S. : Data user tercetak ke layar, jika username tidak ditemukan akan
-			dicetak pesan kesalahan}
+    
+    procedure CariAnggota(var arrUser : UArr);
+    {Mencari anggota dengan username tertentu dan mencetak datanya ke layar}
+    {I.S. : arrUser sudah berisi, username didapat dari input}
+    {F.S. : Data user tercetak ke layar, jika username tidak ditemukan akan
+            dicetak pesan kesalahan}
 
-	{KAMUS LOKAL}
-	var
-		username : string;
-		i : integer;
-		found : boolean;
+    {KAMUS LOKAL}
+    var
+        username : string;
+        i : integer;
+        found : boolean;
 
-	{ALGORITMA}
-	begin
+    {ALGORITMA}
+    begin
 
-		write('Masukkan username: ');
-		readln(username);
-		i := 1;
-		found := false;
-		
-		while ((not found) and (i <= lenUser)) do
-		begin
-			if(arrUser[i].Username = username) then
-			begin
-				found := true;
-			end else
-			begin
-				inc(i);
-			end;
-		end;
+        write('Masukkan username: ');
+        readln(username);
+        i := 1;
+        found := false;
+        
+        while ((not found) and (i <= lenUser)) do
+        begin
+            if(arrUser[i].Username = username) then
+            begin
+                found := true;
+            end else
+            begin
+                inc(i);
+            end;
+        end;
 
-		if (found) then
-		begin
-			writeln('Nama Anggota: ', arrUser[i].Nama);
-			writeln('Alamat Anggota: ', arrUser[i].Alamat);
-		end else
-		begin
-			writeln('Anggota tidak ditemukan');
-		end;
-	end;
+        if (found) then
+        begin
+            writeln('Nama Anggota: ', arrUser[i].Nama);
+            writeln('Alamat Anggota: ', arrUser[i].Alamat);
+        end else
+        begin
+            writeln('Anggota tidak ditemukan');
+        end;
+        writeln();
+        writeln('Ketik 0 untuk kembali ke menu.');
+        readln();
+        ClrScr;
+    end;
 
 //======================================
 
@@ -90,6 +95,7 @@ function leftrotate(x, c: Cardinal): Cardinal;
 function hashpw(password: string): string;
     //Kamus Lokal
     const 
+    //konstanta berikut digunakan untuk membuat peubah pada fungsi hash
     s: array[0..63] of Cardinal = (
         7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
         5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,
@@ -114,10 +120,10 @@ function hashpw(password: string): string;
         $6fa87e4f, $fe2ce6e0, $a3014314, $4e0811a1,
         $f7537e82, $bd3af235, $2ad7d2bb, $eb86d391 );
 
-    var a0, b0, c0, d0, a,b,c,d, f, g, dTemp: Cardinal;
+    var a0,b0,c0,d0, a,b,c,d, f,g,dTemp: Cardinal;
     Len: Integer;
     Arrpw : array[0..63] of Char;
-    M: array[0..15] of Cardinal absolute Arrpw; //memecah Arrpw menjadi 16 potongan kata 32-bit
+    M: array[0..15] of Cardinal absolute Arrpw; //memecah Arrpw menjadi 16 potongan data ordinal untuk diolah
     i: Integer;
     
     //Algorithm
@@ -149,7 +155,8 @@ function hashpw(password: string): string;
             D := d0;
 
         //Main loop:
-        for i := 0 to 63 do begin
+        for i := 0 to 63 do 
+        begin
         //dalam setiap character password dibuat suatu fungsi yang mengakses array K, M, dan s
         //tujuannya untuk membuat tiap character pada password akan membuat perubahan pada variable initiator
         //dibuat 4 fungsi berbeda sehingga proses hashing dapat lebih rumit
@@ -169,7 +176,9 @@ function hashpw(password: string): string;
                 F := C xor (B or (not D));
                 g := (7*i) mod 16;
             end;
-
+        
+        //Setiap character tadi akan merubah nilai B pada fungsi berikut
+        //Kemudian, nilai tersebut dioper ke variable D, C, A, dan dTemp
             dTemp := D;
             D := C;
             C := B;
@@ -284,28 +293,28 @@ procedure log_in(var arrUser: UArr; var UserIn : User);
     end;
 
     procedure PrintUser (var arrUser : UArr);
-	{Menulis elemen-elemen dari arrUser ke layar dengan format sesuai data user}
-	{I.S. : arrUser sudah berisi data dari file user dan/atau modifikasi di main program}
-	{F.S. :	arrUser tercetak ke layar sesuai format data user}
-	{' | ' digunakan untuk pemisah antar kolom}
-	var
-		k : integer;
-	begin
-		writeln(lenUser);
-		for k := 1 to (lenUser) do
-		begin
-			write(k);
-			write(' | ');
-			write(arrUser[k].Nama);
-			write(' | ');
-			write(arrUser[k].Alamat);
-			write(' | ');
-			write(arrUser[k].Username);
-			write(' | ');
-			write(arrUser[k].Password);
-			write(' | ');
-			write(arrUser[k].Role);
-			writeln();
-		end;
-	end;
+    {Menulis elemen-elemen dari arrUser ke layar dengan format sesuai data user}
+    {I.S. : arrUser sudah berisi data dari file user dan/atau modifikasi di main program}
+    {F.S. : arrUser tercetak ke layar sesuai format data user}
+    {' | ' digunakan untuk pemisah antar kolom}
+    var
+        k : integer;
+    begin
+        writeln(lenUser);
+        for k := 1 to (lenUser) do
+        begin
+            write(k);
+            write(' | ');
+            write(arrUser[k].Nama);
+            write(' | ');
+            write(arrUser[k].Alamat);
+            write(' | ');
+            write(arrUser[k].Username);
+            write(' | ');
+            write(arrUser[k].Password);
+            write(' | ');
+            write(arrUser[k].Role);
+            writeln();
+        end;
+    end;
 end.

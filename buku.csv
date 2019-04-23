@@ -1,9 +1,11 @@
 ID_Buku,Judul_Buku,Author,Jumlah_Buku,Tahun_Penerbit,Kategori
-1001,Bagus Sekali,Van Houten,1,2000,sastra
-2001,Rahasia Bumi Datar,Ananda Hutama,10,2010,sains
+1001,Bagus Sekali,Van Houten,101,2000,sastra
+2001,Rahasia Bumi Datar,Ananda Hutama,9,2010,sains
 3001,Sejarah Manusia Purba,Von Koenigswald,10,1989,sejarah
 4001,Wibustah,Hiroshima Nagasaki,24,1999,manga
 5001,DasPro Asyik,Tuan Yon,99,2020,manga
 6001,DasPro Nggak Asyik,Tuan Yin,110,2021,manga
 7001,GunGunGunGun,Gunawan,9,2019,manga
 8001,PAR Asyik,Abi Dharma Saputra Dewa,59,2011,programming
+24501,Kiat lulus PAR dan DasPro,Faris-Kun,400,2020,sains
+330192,Detik-Detik Pengumuman Jurusan,GUnawan Kamaruddin,1001,2019,sains

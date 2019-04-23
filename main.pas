@@ -1,16 +1,8 @@
-//==============================================//
-//                                              //
-//                MAIN PROGRAM                  //
-//                                              //
-//----------------------------------------------//
-//                                              //
-//      Main Program Simulasi Perpustakaan      //
-//                                              //
-//==============================================// 
 Program main;
 
 uses
-	uFileLoader,uFileSaver, uDate, uBuku, uAnggota, uPinjam, uKembali, uHilang, parsertuanyon;
+	uAnggota, uBuku, uDate, uFileLoader, uFileSaver, uHilang, uKembali, uPinjam,
+	crt;
 
 var
 	arrBuku : array[1..1000] of Buku;
@@ -28,26 +20,29 @@ begin
 	write('Masukkan nama File Buku: ');
 	readln(filename);
 	LoadBuku(arrBuku, filename);
+	writeln('');
+
 
 	write('Masukkan nama File User: ');
 	readln(filename);
 	LoadUser(arrUser, filename);
+	writeln('');
 
 
 	write('Masukkan nama File Peminjaman: ');
 	readln(filename);
 	LoadHistoryPeminjaman(arrHistoryPeminjaman, filename);
+	writeln('');
 
 	write('Masukkan nama File Pengembalian: ');
 	readln(filename);
 	LoadHistoryPengembalian(arrHistoryPengembalian, filename);
+	writeln('');
 
-	write('Masukkan nama File Buku Hilang: ');
+	write('Masukkan nama File Buku hilang: ');
 	readln(filename);
 	LoadLaporanHilang(arrLaporanHilang, filename);
-
 	writeln('');
-	writeln('File perpustakaan berhasil dimuat!');
 
 end;
 
@@ -80,6 +75,7 @@ begin
 	SaveLaporanHilang(arrLaporanHilang, filename);
 	writeln('');
 
+	writeln('File perpustakaan berhasil disimpan!');
 end;
 
 
@@ -91,6 +87,18 @@ begin
 	userIn.Password := '';
 	userIn.Role := '';
 	userIn.Status := false;
+end;
+
+procedure Exit();
+begin
+	writeln('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan? (Y/N)');
+	readln(x);
+	if (x = 'Y') then
+	begin
+		Save_File();
+	end;
+	isProgramRunning := false;
+	writeln('Selamat Tinggal');
 end;
 
 procedure Menu_Admin();
@@ -111,6 +119,8 @@ begin
 	writeln('---------------------------------------------------------');
 	write('> ');
 	readln(x);
+	ClrScr;
+	writeln('> ',x);
 	case x of
 		'register' : begin
 						regis(arrUser);
@@ -131,7 +141,7 @@ begin
 								amount(arrBuku);
 								end;
 		'riwayat': begin
-						cek_riwayat(arrHistoryPengembalian, arrBuku);
+						cek_riwayat(arrHistoryPeminjaman, arrBuku);
 					end;
 		'statistik': begin
 						list_statistik(arrBuku, arrUser);
@@ -146,13 +156,7 @@ begin
 						LogoutUser()
 					end;
 		'exit': begin
-					writeln('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan? (Y/N)');
-					readln(x);
-					if (x = 'Y') then
-					begin
-						Save_File();
-					end;
-					isProgramRunning := false;
+					Exit();
 				end;
 	end;
 end;
@@ -169,8 +173,10 @@ begin
 	writeln('$ logout : keluar');
 	writeln('$ exit : keluar program');
 	writeln('---------------------------------------------------------');
-	write('> '); 
+	writeln('> '); 
 	readln(x);
+	ClrScr;
+	writeln('> ',x);
 	case x of
 		'cari': begin
 					search(arrBuku);			
@@ -194,13 +200,7 @@ begin
 						LogoutUser();
 					end;
 		'exit': begin
-					writeln('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan? (Y/N)');
-					readln(x);
-					if (x = 'Y') then
-					begin
-						Save_File();
-					end;
-					isProgramRunning := false;
+					Exit();
 				end;
 	end;
 end;
@@ -218,6 +218,8 @@ begin
 	writeln('---------------------------------------------------------');
 	write('> ');
 	readln(x);
+	ClrScr;
+	writeln('> ',x);
 	case x of
 		'login': begin
 					log_in(arrUser, userIn);
@@ -246,13 +248,7 @@ begin
 					Save_File();
 				end;
 		'exit': begin
-					writeln('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan? (Y/N)');
-					readln(x);
-					if (x = 'Y') then
-					begin
-						Save_File();
-					end;
-					isProgramRunning := false;
+					Exit();
 				end;
 	end;
 end;
@@ -260,9 +256,26 @@ end;
 begin
 
 	// Memulai program dengan me-load semua file data perpustakaan
+	textbackground(red);
+	ClrScr;
 	Load_File();
+	textbackground(blue); {background colour}
+	ClrScr; {Clear screen with a brown colour. Try run the program without this..}
+	TextColor(yellow);
 
 	// Set isProgramRunning True untuk menandakan program sedang berjalan
+	writeln('         ,'' ``'',');
+	writeln('        ''  (o)(o)');
+	writeln('       `       > ;');
+	writeln('       '',     . ...-''"""""`''.');
+	writeln('     .''`'',`''''`________:   ":''');
+	writeln('   (`''. ''.;  |           ;/\;\;');
+	writeln('  (`'',.'',.;  | SELAMAT DATANG |');
+	writeln(' (,''` .`.,''  |       DI       |');
+	writeln(' (,.'',.'',''   |  PERPUSTAKAAN  |');
+	writeln('(,.'',.-`_____|  BA SING TSE!  |');
+	writeln('    __\_ _\_ |       :)       |');
+	writeln('             |________________|');
 	isProgramRunning := true;
 
 	// Menjalankan Menu User sebagai program utama

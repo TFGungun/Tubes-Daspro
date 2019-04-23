@@ -6,7 +6,7 @@
 unit uKembali;
 
 interface
-	uses uFileLoader, udate;
+	uses uFileLoader, udate, Crt;
 
 	function isThnKabisat(j:integer): boolean;
 	{ Menghasilkan true jika tahun adalah tahun kabisat dan false jika tidak }
@@ -243,5 +243,9 @@ implementation
 			WriteDate(arrHistoryPengembalian[k].Tanggal_Pengembalian);
 			writeln();
 		end;
+	writeln();
+	writeln('Ketik 0 untuk kembali ke menu.');
+	readln();
+	ClrScr;
 	end;
 end.

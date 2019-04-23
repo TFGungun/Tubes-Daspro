@@ -6,7 +6,7 @@
 unit uHilang;
 
 interface
-	uses uFileLoader, uDate;
+	uses uFileLoader, uDate, Crt;
 
 	procedure PrintLaporanWithJudul(var arrLaporanHilang : HilangArr ; arrBuku : BArr);
 	{Menulis laporan hilang dengan format
@@ -57,6 +57,11 @@ implementation
 			write(' | ');
 			WritelnDate(arrLaporanHilang[i].Tanggal_Laporan);
 		end;
+
+		writeln();
+		writeln('Ketik 0 untuk kembali ke menu.');
+		readln();
+		ClrScr;
 	end;
 
 	function CariJudulBuku(var arrBuku : Barr ; ID_Buku : string) : string;
